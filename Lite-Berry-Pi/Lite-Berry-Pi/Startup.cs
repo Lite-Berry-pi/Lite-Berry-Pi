@@ -7,10 +7,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lite_Berry_Pi.Models.Interfaces;
+using Lite_Berry_Pi.Models.Interfaces.Services;
 
 namespace Lite_Berry_Pi
 {
@@ -37,8 +40,24 @@ namespace Lite_Berry_Pi
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddTransient<IActivityLog, ActivityLogRepository>();
+            services.AddTransient<IDesign, DesignRepository>();
+            services.AddTransient<IUser, UserRepository>();
+
             services.AddMvc();
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+              options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "LiteBerry",
+                    Version = "v1",
+                });
+            });
         }
 
 
@@ -54,12 +73,20 @@ namespace Lite_Berry_Pi
 
             app.UseRouting();
 
+            app.UseSwagger(options =>
+           {
+               options.RouteTemplate = "/api/{documentName}/swagger.json";
+           });
+
+            app.UseSwaggerUI(options =>
+           {
+               options.SwaggerEndpoint("/api/v1/swagger.json", "LiteBerry");
+               options.RoutePrefix = "";
+           });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                
                 {
                     endpoints.MapControllers();
                 }
