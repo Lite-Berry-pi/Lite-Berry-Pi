@@ -120,10 +120,10 @@ User  1:1  ActivityLog
 UserDesign 1: many Design
 
 ### Domain Model
-
+![Lite-Berry_Domain Model](../../Assets/Lite-Berry_domain.png)
 
 
 ### ERD
-
+![Lite-Berry_ERD](../../Assets/Lite-Berry_ERD.png)
 
 
