@@ -37,7 +37,10 @@ namespace Lite_Berry_Pi
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddMvc();
+            services.AddControllers();
         }
+
 
         
 
@@ -57,7 +60,12 @@ namespace Lite_Berry_Pi
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+                {
+                    endpoints.MapControllers();
+                }
             });
+   
         }
     }
 }
+    

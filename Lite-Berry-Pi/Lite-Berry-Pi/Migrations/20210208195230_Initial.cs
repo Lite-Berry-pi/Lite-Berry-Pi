@@ -11,9 +11,9 @@ namespace Lite_Berry_Pi.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,11 +24,11 @@ namespace Lite_Berry_Pi.Migrations
                 name: "ActivityLog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LoginTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SendTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    LoginTime = table.Column<DateTime>(nullable: false),
+                    SendTime = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,8 +45,8 @@ namespace Lite_Berry_Pi.Migrations
                 name: "UserDesign",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    DesignId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    DesignId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,14 +63,14 @@ namespace Lite_Berry_Pi.Migrations
                 name: "Design",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DesignCoords = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserDesignUserId = table.Column<int>(type: "int", nullable: true),
-                    UserDesignDesignId = table.Column<int>(type: "int", nullable: true),
-                    ActivityLogId = table.Column<int>(type: "int", nullable: true)
+                    Title = table.Column<string>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    DesignCoords = table.Column<string>(nullable: false),
+                    UserDesignUserId = table.Column<int>(nullable: true),
+                    UserDesignDesignId = table.Column<int>(nullable: true),
+                    ActivityLogId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,17 +111,17 @@ namespace Lite_Berry_Pi.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserDesign",
-                columns: new[] { "DesignId", "UserId" },
+                columns: new[] { "UserId", "DesignId" },
                 values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
                 table: "UserDesign",
-                columns: new[] { "DesignId", "UserId" },
+                columns: new[] { "UserId", "DesignId" },
                 values: new object[] { 2, 2 });
 
             migrationBuilder.InsertData(
                 table: "UserDesign",
-                columns: new[] { "DesignId", "UserId" },
+                columns: new[] { "UserId", "DesignId" },
                 values: new object[] { 3, 3 });
 
             migrationBuilder.CreateIndex(
