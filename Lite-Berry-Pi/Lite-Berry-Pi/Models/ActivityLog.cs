@@ -11,12 +11,12 @@ namespace Lite_Berry_Pi.Models
 
         public DateTime LoginTime { get; set; }
          
-        public DateTime sendTime { get; set; }
+        public DateTime SendTime { get; set; }
 
         //Navigation Properties:
         public List<Design> Designs { get; set; }
 
-        public User user { get; set; }
+        public User User { get; set; }
 
     }
 }
