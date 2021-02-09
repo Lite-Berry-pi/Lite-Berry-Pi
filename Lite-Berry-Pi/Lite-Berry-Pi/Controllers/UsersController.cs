@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models;
+using Lite_Berry_Pi.Models.Interfaces;
+using Lite_Berry_Pi.Models.Api;
 
 namespace Lite_Berry_Pi.Controllers
 {
@@ -14,25 +16,25 @@ namespace Lite_Berry_Pi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly LiteBerryDbContext _context;
+        private readonly IUser _user;
 
-        public UsersController(LiteBerryDbContext context)
+        public UsersController(IUser user)
         {
-            _context = context;
+            _user = user;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return Ok(await _user.GetListOfUsers());
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+           UserDto user = await _user.GetSingleUser(id);
 
             if (user == null)
             {
@@ -52,26 +54,8 @@ namespace Lite_Berry_Pi.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedUser = await _user.UpdateUser(id, user);
+            return Ok(updatedUser);
         }
 
         // POST: api/Users
@@ -80,9 +64,7 @@ namespace Lite_Berry_Pi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
-
+            await _user.CreateUser(user);
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
@@ -90,21 +72,8 @@ namespace Lite_Berry_Pi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.Id == id);
+            await _user.Delete(id);
+            return NoContent();
         }
     }
 }

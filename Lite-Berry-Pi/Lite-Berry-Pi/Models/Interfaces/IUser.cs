@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lite_Berry_Pi.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Lite_Berry_Pi.Models.Interfaces
     {
         Task<User> CreateUser(User user);
 
-        Task <List<User>> GetListOfUsers();
+        Task <List<UserDto>> GetListOfUsers();
 
-        Task<User> GetSingleUser(int id);
+        Task<UserDto> GetSingleUser(int id);
 
         Task<User> UpdateUser(int id, User user);
 

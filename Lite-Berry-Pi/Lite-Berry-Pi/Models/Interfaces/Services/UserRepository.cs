@@ -1,4 +1,5 @@
 ﻿using Lite_Berry_Pi.Data;
+using Lite_Berry_Pi.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -40,10 +41,10 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         }
 
         /// get all users
-        public async Task<List<User>> GetListOfUsers()
+        public async Task<List<UserDto>> GetListOfUsers()
         {
             return await _context.User
-                .Select(user => new User
+                .Select(user => new UserDto
                 {
                     Id = user.Id,
                     Name = user.Name,
@@ -60,11 +61,11 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         }
 
         // get user by ID
-        public async Task<User> GetSingleUser(int id)
+        public async Task<UserDto> GetSingleUser(int id)
         {
             return await _context.User
                 .Where(x => x.Id == id)
-                .Select(user => new User
+                .Select(user => new UserDto
                 {
                     Id = user.Id,
                     Name = user.Name,
@@ -82,16 +83,9 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         /// update user
         public async Task<User> UpdateUser(int id, User user)
         {
-            User updatedUser = new User()
-            {
-                Id = id,
-                Name = user.Name
-            };
-
-            _context.Entry(updatedUser).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return updatedUser;
-
+            return user;
         }
 
         /// add a design to a user

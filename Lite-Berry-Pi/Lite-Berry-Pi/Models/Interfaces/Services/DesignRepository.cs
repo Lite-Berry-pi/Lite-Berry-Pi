@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lite_Berry_Pi.Data;
+using Lite_Berry_Pi.Models.Api;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lite_Berry_Pi.Models.Interfaces.Services
@@ -16,42 +17,61 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             _context = context;
         }
 
-        public async Task<Design> CreateDesign(Design Design)
+        public async Task<Design> CreateDesign(DesignDto incomingData)
         {
-            _context.Entry(Design).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+            Design design = new Design
+            {
+                Id = incomingData.Id,
+                Title = incomingData.Title,
+                DesignCoords = incomingData.DesignCoords,
+                TimeStamp = DateTime.Now
+            };
+
+            _context.Entry(design).State = Microsoft.EntityFrameworkCore.EntityState.Added;
             await _context.SaveChangesAsync();
-            return Design;
+            return design;
         }
 
         public async Task DeleteDesign(int id)
         {
-
-            Design design = await GetDesign(id);
+            DesignDto designdto = await GetDesign(id);
+            Design design = await _context.Design.FirstOrDefaultAsync(d => d.Id == designdto.Id);
             _context.Entry(design).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Design>> GetAllDesigns()
+        public async Task<List<DesignDto>> GetAllDesigns()
         {
-            return await _context.Design
-                .Include(d => d.UserDesign)
-                .ThenInclude(u => u.User)
-                .ThenInclude(us => us.Name)
-                .ToListAsync();
+            var designs = await _context.Design
+                 .Select(design => new DesignDto
+                 {
+                     Id = design.Id,
+                     Title = design.Title,
+                     DesignCoords = design.DesignCoords
+                 })
+                 .ToListAsync();
+            return designs;
         }
 
-        public async Task<Design> GetDesign(int id)
+        public async Task<DesignDto> GetDesign(int id)
         {
             return await _context.Design
-                .Include(d => d.UserDesign)
-                .ThenInclude(u => u.User)
-                .ThenInclude(us => us.Name)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .Select(design => new DesignDto
+                {
+                    Id = id,
+                    Title = design.Title,
+                    DesignCoords = design.DesignCoords
+                })
+                //TODO: Do we want to get the name of the user who created the design here?
+                .FirstOrDefaultAsync();
             
         }
 
-        public async Task<Design> UpdateDesign(int id, Design design)
+        public async Task<Design> UpdateDesign(int id, DesignDto incomingData)
         {
+            Design design = await _context.Design.FirstOrDefaultAsync(x => x.Id == id);
+            design.Title = incomingData.Title;
+            design.DesignCoords = incomingData.DesignCoords;
             _context.Entry(design).State =  Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
             return design;

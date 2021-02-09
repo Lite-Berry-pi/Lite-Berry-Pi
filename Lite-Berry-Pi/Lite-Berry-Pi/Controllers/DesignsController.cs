@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models;
+using Lite_Berry_Pi.Models.Interfaces;
+using Lite_Berry_Pi.Models.Api;
 
 namespace Lite_Berry_Pi.Controllers
 {
@@ -14,31 +16,30 @@ namespace Lite_Berry_Pi.Controllers
     [ApiController]
     public class DesignsController : ControllerBase
     {
-        private readonly LiteBerryDbContext _context;
+        private readonly IDesign _design;
 
-        public DesignsController(LiteBerryDbContext context)
+        public DesignsController(IDesign design)
         {
-            _context = context;
+            _design = design;
         }
 
         // GET: api/Designs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Design>>> GetDesign()
+        public async Task<ActionResult<IEnumerable<Design>>> GetDesigns()
         {
-            return await _context.Design.ToListAsync();
+            return Ok(await _design.GetAllDesigns());
         }
 
         // GET: api/Designs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Design>> GetDesign(int id)
+        public async Task<ActionResult<DesignDto>> GetDesign(int id)
         {
-            var design = await _context.Design.FindAsync(id);
+            var design = await _design.GetDesign(id);
 
-            if (design == null)
+            if(design == null)
             {
                 return NotFound();
             }
-
             return design;
         }
 
@@ -46,65 +47,33 @@ namespace Lite_Berry_Pi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDesign(int id, Design design)
+        public async Task<IActionResult> PutDesign(int id, DesignDto incomingData)
         {
-            if (id != design.Id)
+            if(id != incomingData.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(design).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DesignExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var updatedDesign = await _design.UpdateDesign(id, incomingData);
+            return Ok(updatedDesign);
         }
 
         // POST: api/Designs
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Design>> PostDesign(Design design)
+        public async Task<ActionResult<Design>> PostDesign(DesignDto incomingData)
         {
-            _context.Design.Add(design);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetDesign", new { id = design.Id }, design);
+            await _design.CreateDesign(incomingData);
+            return CreatedAtAction("GetDesign", new { id = incomingData.Id  }, incomingData);
         }
 
         // DELETE: api/Designs/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Design>> DeleteDesign(int id)
         {
-            var design = await _context.Design.FindAsync(id);
-            if (design == null)
-            {
-                return NotFound();
-            }
-
-            _context.Design.Remove(design);
-            await _context.SaveChangesAsync();
-
-            return design;
-        }
-
-        private bool DesignExists(int id)
-        {
-            return _context.Design.Any(e => e.Id == id);
+            await _design.DeleteDesign(id);
+            return NoContent();
         }
     }
 }
