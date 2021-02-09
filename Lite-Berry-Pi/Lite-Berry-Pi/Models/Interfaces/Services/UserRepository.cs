@@ -49,18 +49,12 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
                     Id = user.Id,
                     Name = user.Name,
                     UserDesigns = user.UserDesigns
-                        .Where(ud => ud.UserId == user.Id)
-                        .Select(ud => new UserDesign()
+                        .Select(design => new DesignDto
                         {
-                            UserId = ud.UserId,
-                            DesignId = ud.DesignId,
-                            Designs = ud.Designs
-                                .Select(d => new DesignDto()
-                                {
-                                    Id = d.Id,
-                                    Title = d.Title,
-                                    DesignCoords = d.DesignCoords
-                                }).ToList()
+                            Id = design.Designs.Id,
+                            Title = design.Designs.Title,
+                            DesignCoords = design.Designs.DesignCoords
+
                         }).ToList(),
                     ActivityLogs = user.ActivityLogs
                         .Select(logs => new ActivityLog

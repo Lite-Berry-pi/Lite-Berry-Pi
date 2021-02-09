@@ -16,6 +16,6 @@ namespace Lite_Berry_Pi.Models
 
         public User User { get; set; }
 
-        public List<DesignDto> Designs { get; set; }
+        public Design Designs { get; set; }
     }
 }
