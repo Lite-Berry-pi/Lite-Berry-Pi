@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lite_Berry_Pi.Models.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,6 @@ namespace Lite_Berry_Pi.Models
 
         public User User { get; set; }
 
-        public List<Design> Designs { get; set; }
+        public Design Designs { get; set; }
     }
 }

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Lite_Berry_Pi</RootNamespace>
+    <UserSecretsId>67287735-06ff-4323-b497-05fcc22af11d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
