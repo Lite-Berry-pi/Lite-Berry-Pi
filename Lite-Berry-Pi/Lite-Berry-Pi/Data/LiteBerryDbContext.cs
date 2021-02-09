@@ -1,4 +1,5 @@
 ﻿using Lite_Berry_Pi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lite_Berry_Pi.Data
 {
-    public class LiteBerryDbContext : DbContext
+    public class LiteBerryDbContext : IdentityDbContext<ApplicationUser>
     {
         //Table creators:
         public DbSet<User> User { get; set; }
@@ -15,6 +16,8 @@ namespace Lite_Berry_Pi.Data
 
         public DbSet<UserDesign> UserDesign { get; set; }
         public DbSet<ActivityLog> ActivityLog { get; set; }
+        //Is this required?
+        //public DbSet<ApplicationUser> ApplicationUser { get; set; }
         
         public LiteBerryDbContext(DbContextOptions options) : base(options)
         {
@@ -23,6 +26,9 @@ namespace Lite_Berry_Pi.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<UserDesign>().HasKey(
                 x => new { x.UserId, x.DesignId });
 

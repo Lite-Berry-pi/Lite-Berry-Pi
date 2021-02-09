@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Interfaces.Services;
+using Lite_Berry_Pi.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Lite_Berry_Pi
 {
@@ -39,6 +41,16 @@ namespace Lite_Berry_Pi
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
             });
+
+            //We are not using email so do we need this
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+               
+            })
+            .AddEntityFrameworkStores<LiteBerryDbContext>();
+
+            services.AddTransient<IUserService, IdentityUserService>();
 
             services.AddTransient<IActivityLog, ActivityLogRepository>();
             services.AddTransient<IDesign, DesignRepository>();
