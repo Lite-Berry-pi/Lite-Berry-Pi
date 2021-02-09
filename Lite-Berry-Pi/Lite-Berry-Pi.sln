@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lite-Berry-Pi", "Lite-Berry-Pi\Lite-Berry-Pi.csproj", "{5FD5D65F-BE05-48CC-A95E-A429715B1164}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lite-Berry-Pi", "Lite-Berry-Pi\Lite-Berry-Pi.csproj", "{5FD5D65F-BE05-48CC-A95E-A429715B1164}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketSocket", "..\..\rocketsocket-master\RocketSocket\RocketSocket.csproj", "{EB749FFE-4B26-4F80-8DF5-7B429C77E923}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB749FFE-4B26-4F80-8DF5-7B429C77E923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB749FFE-4B26-4F80-8DF5-7B429C77E923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB749FFE-4B26-4F80-8DF5-7B429C77E923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB749FFE-4B26-4F80-8DF5-7B429C77E923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

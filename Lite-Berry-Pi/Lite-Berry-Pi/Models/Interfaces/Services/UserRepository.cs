@@ -54,7 +54,6 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
                             Id = design.Designs.Id,
                             Title = design.Designs.Title,
                             DesignCoords = design.Designs.DesignCoords
-
                         }).ToList(),
                     ActivityLogs = user.ActivityLogs
                         .Select(logs => new ActivityLog
@@ -75,6 +74,13 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
                 {
                     Id = user.Id,
                     Name = user.Name,
+                    UserDesigns = user.UserDesigns
+                        .Select(design => new DesignDto
+                        {
+                            Id = design.Designs.Id,
+                            Title = design.Designs.Title,
+                            DesignCoords = design.Designs.DesignCoords
+                        }).ToList(),
                     ActivityLogs = user.ActivityLogs
                         .Select(logs => new ActivityLog
                         {
