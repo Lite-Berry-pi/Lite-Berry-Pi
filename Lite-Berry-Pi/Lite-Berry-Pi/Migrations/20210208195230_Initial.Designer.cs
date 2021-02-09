@@ -10,23 +10,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lite_Berry_Pi.Migrations
 {
     [DbContext(typeof(LiteBerryDbContext))]
-    [Migration("20210208192936_Initial")]
+    [Migration("20210208195230_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Lite_Berry_Pi.Models.ActivityLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("LoginTime")
                         .HasColumnType("datetime2");
@@ -49,7 +49,7 @@ namespace Lite_Berry_Pi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ActivityLogId")
                         .HasColumnType("int");
@@ -108,7 +108,7 @@ namespace Lite_Berry_Pi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -171,8 +171,6 @@ namespace Lite_Berry_Pi.Migrations
                     b.HasOne("Lite_Berry_Pi.Models.User", "User")
                         .WithMany("ActivityLogs")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Lite_Berry_Pi.Models.Design", b =>
@@ -184,8 +182,6 @@ namespace Lite_Berry_Pi.Migrations
                     b.HasOne("Lite_Berry_Pi.Models.UserDesign", "UserDesign")
                         .WithMany("Designs")
                         .HasForeignKey("UserDesignUserId", "UserDesignDesignId");
-
-                    b.Navigation("UserDesign");
                 });
 
             modelBuilder.Entity("Lite_Berry_Pi.Models.UserDesign", b =>
@@ -195,25 +191,6 @@ namespace Lite_Berry_Pi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Lite_Berry_Pi.Models.ActivityLog", b =>
-                {
-                    b.Navigation("Designs");
-                });
-
-            modelBuilder.Entity("Lite_Berry_Pi.Models.User", b =>
-                {
-                    b.Navigation("ActivityLogs");
-
-                    b.Navigation("UserDesigns");
-                });
-
-            modelBuilder.Entity("Lite_Berry_Pi.Models.UserDesign", b =>
-                {
-                    b.Navigation("Designs");
                 });
 #pragma warning restore 612, 618
         }
