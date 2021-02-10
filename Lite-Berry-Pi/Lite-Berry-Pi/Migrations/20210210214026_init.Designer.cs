@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lite_Berry_Pi.Migrations
 {
     [DbContext(typeof(LiteBerryDbContext))]
-    [Migration("20210210185035_init")]
+    [Migration("20210210214026_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

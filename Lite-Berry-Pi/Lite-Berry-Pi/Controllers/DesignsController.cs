@@ -9,9 +9,11 @@ using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lite_Berry_Pi.Controllers
-{
+{ 
+
     [Route("api/[controller]")]
     [ApiController]
     public class DesignsController : ControllerBase
@@ -75,6 +77,7 @@ namespace Lite_Berry_Pi.Controllers
             await _design.DeleteDesign(id);
             return NoContent();
         }
+        
 
         // GET: api/Designs/GetDesigns/3
         [HttpGet("getdesign/{id}")]
