@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Lite_Berry_Pi.Models;
 using Lite_Berry_Pi.Models.Api;
 using Lite_Berry_Pi.Models.Interfaces;
+using System.Security.Claims;
 
 namespace Lite_Berry_Pi.Models.Interfaces.Services
 {
     public class IdentityUserService : IUserService
     {
         private UserManager<ApplicationUser> userManager;
+        private JwtTokenService tokenService;
 
-        public IdentityUserService(UserManager<ApplicationUser> manager)
+        public IdentityUserService(UserManager<ApplicationUser> manager, JwtTokenService jwtTokenService)
         {
             userManager = manager;
+            tokenService = jwtTokenService;
         }
 
         public async Task<ApplicationUserDto> Register(RegisterUser data, ModelStateDictionary modelState
@@ -59,11 +62,25 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
                 return new ApplicationUserDto
                 {
                     Id = user.Id,
-                    Username = user.UserName
+                    Username = user.UserName,
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(15))
                 };
 
             }
             return null;
+             }
+
+        public async Task<ApplicationUserDto> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await userManager.GetUserAsync(principal);
+            return new ApplicationUserDto
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+            };
         }
+
+
     }
 }

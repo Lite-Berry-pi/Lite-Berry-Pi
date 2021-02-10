@@ -1,5 +1,6 @@
 ﻿using Lite_Berry_Pi.Models.Api;
 using Lite_Berry_Pi.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,6 +44,13 @@ namespace Lite_Berry_Pi.Controllers
                 return user;
             }
             return Unauthorized();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpGet("me")]
+        public async Task<ActionResult<ApplicationUserDto>> Me()
+        {
+            return await userService.GetUser(this.User);
         }
     }
 }
