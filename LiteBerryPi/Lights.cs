@@ -68,9 +68,22 @@ namespace RaspberryPi
         L20, L21, L22, L23, L24, L25
       };
     }
+    public List<LED> CreateLightPattern(string inString)
+    {
+      if (AllLights.Count != inString.Length)
+      {
+        throw new System.Exception("Input string does no match the elements in Light List");
+      }
+      List<LED> newList = new List<LED>();    
 
-    
-
-
+      for (int i = 0; i < inString.Length; i++)
+      {
+        if (inString[i] == '1')
+        {
+          newList.Add(AllLights[i]);
+        }
+      }
+      return newList;
+    }
   }
 }
