@@ -1,19 +1,14 @@
 using Lite_Berry_Pi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Interfaces.Services;
+using Lite_Berry_Pi.Hubs;
 
 namespace Lite_Berry_Pi
 {
@@ -44,6 +39,7 @@ namespace Lite_Berry_Pi
             services.AddTransient<IDesign, DesignRepository>();
             services.AddTransient<IUser, UserRepository>();
 
+            services.AddSignalR();
             services.AddMvc();
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -85,9 +81,9 @@ namespace Lite_Berry_Pi
            });
 
             app.UseEndpoints(endpoints =>
-            {
-                
+            {  
                 {
+                    endpoints.MapHub<RaspBerryPi>("/raspberrypi");
                     endpoints.MapControllers();
                 }
             });
