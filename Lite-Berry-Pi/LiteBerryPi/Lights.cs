@@ -36,31 +36,31 @@ namespace RaspberryPi
 
     public Lights()
     {
-      L1 = new LED() { Column = 7, Row = 5 };
-      L2 = new LED() { Column = 12, Row = 5 };
-      L3 = new LED() { Column = 16, Row = 5 };
-      L4 = new LED() { Column = 20, Row = 5 };
-      L5 = new LED() { Column = 21, Row = 5 };
-      L6 = new LED() { Column = 7, Row = 6 };
-      L7 = new LED() { Column = 12, Row = 6 };
-      L8 = new LED() { Column = 16, Row = 6 };
-      L9 = new LED() { Column = 20, Row = 6 };
-      L10 = new LED() { Column = 21, Row = 6 };
-      L11 = new LED() { Column = 7, Row = 13 };
-      L12 = new LED() { Column = 12, Row = 13 };
-      L13 = new LED() { Column = 16, Row = 13 };
-      L14 = new LED() { Column = 20, Row = 13 };
-      L15 = new LED() { Column = 21, Row = 13 };
-      L16 = new LED() { Column = 7, Row = 19 };
-      L17 = new LED() { Column = 12, Row = 19 };
-      L18 = new LED() { Column = 16, Row = 19 };
-      L19 = new LED() { Column = 20, Row = 19 };
-      L20 = new LED() { Column = 21, Row = 19 };
-      L21 = new LED() { Column = 7, Row = 26 };
-      L22 = new LED() { Column = 12, Row = 26 };
-      L23 = new LED() { Column = 16, Row = 26 };
-      L24 = new LED() { Column = 20, Row = 26 };
-      L25 = new LED() { Column = 21, Row = 26 };
+      L1 = new LED() { Column = 7, Row = 5, ID = 1 };
+      L2 = new LED() { Column = 12, Row = 5, ID = 2 };
+      L3 = new LED() { Column = 16, Row = 5, ID = 3 };
+      L4 = new LED() { Column = 20, Row = 5, ID = 4 };
+      L5 = new LED() { Column = 21, Row = 5, ID = 5 };
+      L6 = new LED() { Column = 7, Row = 6, ID = 6 };
+      L7 = new LED() { Column = 12, Row = 6, ID = 7 };
+      L8 = new LED() { Column = 16, Row = 6, ID = 8 };
+      L9 = new LED() { Column = 20, Row = 6, ID = 9 };
+      L10 = new LED() { Column = 21, Row = 6, ID = 10 };
+      L11 = new LED() { Column = 7, Row = 13, ID = 11 };
+      L12 = new LED() { Column = 12, Row = 13, ID = 12 };
+      L13 = new LED() { Column = 16, Row = 13, ID = 13};
+      L14 = new LED() { Column = 20, Row = 13, ID = 14 };
+      L15 = new LED() { Column = 21, Row = 13, ID = 15 };
+      L16 = new LED() { Column = 7, Row = 19, ID = 16 };
+      L17 = new LED() { Column = 12, Row = 19, ID = 17 };
+      L18 = new LED() { Column = 16, Row = 19, ID = 18 };
+      L19 = new LED() { Column = 20, Row = 19, ID = 19 };
+      L20 = new LED() { Column = 21, Row = 19, ID = 20 };
+      L21 = new LED() { Column = 7, Row = 26, ID = 21 };
+      L22 = new LED() { Column = 12, Row = 26, ID = 22 };
+      L23 = new LED() { Column = 16, Row = 26, ID = 23 };
+      L24 = new LED() { Column = 20, Row = 26, ID = 24 };
+      L25 = new LED() { Column = 21, Row = 26, ID = 25 };
 
       AllLights = new List<LED>
       {

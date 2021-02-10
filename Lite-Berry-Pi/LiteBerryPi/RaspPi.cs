@@ -35,11 +35,20 @@ namespace RaspberryPi
     {
       for (int i = 0; i < PinsUsedRows.Length; i++)
       {
-       Controller.ClosePin(PinsUsedRows[i]);
+        Console.WriteLine($"{Controller.IsPinOpen(PinsUsedRows[i])}");
+        if (Controller.IsPinOpen(PinsUsedRows[i]))
+        {
+          Console.WriteLine($"Closing Pin: {PinsUsedRows[i]}");
+          Controller.ClosePin(PinsUsedRows[i]);
+        }
+        Console.WriteLine($"{Controller.IsPinOpen(PinsUsedColumns[i])}");
+        if (Controller.IsPinOpen(PinsUsedColumns[i]))
+        {
+          Console.WriteLine($"Closing Pin: {PinsUsedColumns[i]}");
+          Controller.ClosePin(PinsUsedColumns[i]);
+        }
       }
     }
-
-
     public void OpenPins()
     {
       for(int i = 0; i < PinsUsedRows.Length; i++)
@@ -54,12 +63,9 @@ namespace RaspberryPi
       }
         AllOff();
     }
-
-
     public void ReadAllLights()
     {
       int timesIterated = 0;
-      OpenPins();
       while (timesIterated++ <= 5)
       {
 
@@ -78,6 +84,25 @@ namespace RaspberryPi
         }        
       }
         ClosePins();
+    }
+    public void DisplayLights (List<LED> list)
+    { 
+      Console.WriteLine("The following Lights are being displayed");
+      foreach (LED led in list)
+      {
+        Console.WriteLine($"Light: {led.ID} Col: {led.Column}  Row: {led.Row}");
+      } 
+      Console.WriteLine("Looping till key pressed");            
+      while (!Console.KeyAvailable)
+        {
+          foreach (LED led in list)
+          {
+            Controller.Write(led.Column, PinValue.Low);
+            Controller.Write(led.Row, PinValue.High);
+          //Thread.Sleep(250);
+            AllOff();
+          }
+        }
     }
   }
 }
