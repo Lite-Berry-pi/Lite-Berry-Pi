@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Interfaces.Services;
-using Lite_Berry_Pi.Hubs;
 using Lite_Berry_Pi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -123,8 +122,7 @@ namespace Lite_Berry_Pi
 
             app.UseEndpoints(endpoints =>
             {  
-                {
-                    endpoints.MapHub<RaspBerryPi>("/raspberrypi");
+                {                   
                     endpoints.MapControllers();
                 }
             });
