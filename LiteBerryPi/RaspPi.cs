@@ -14,15 +14,15 @@ namespace RaspberryPi
 
     private int[] PinsUsedRows { get; set; }
     private int[] PinsUsedColumns { get; set; }
-    private Stopwatch Stopwatch { get; set; }
     private int TimeInterval { get; set; }
     public RaspPi(Lights lights, GpioController controller)
-    {
+    {      
       Lights = lights;
       Controller = controller;
       PinsUsedRows = new int[] { 5, 6, 13, 19, 26 };
       PinsUsedColumns = new int[] { 7, 12, 16, 20, 21 };
       TimeInterval = 5000;
+     
     }
     public void SetDisplayTime(int time = 5000)
     {
@@ -96,23 +96,16 @@ namespace RaspberryPi
     }
     public void DisplayLights(List<LED> list)
     {
-      Console.WriteLine("Starting Display Lights");
-      //Console.WriteLine("The following Lights are being displayed");
-      //foreach (LED led in list)
-      //{
-      //  Console.WriteLine($"Light: {led.ID} Col: {led.Column}  Row: {led.Row}");
-      //} 
+      Console.WriteLine("Starting Display Lights");      
       ClosePins();
       OpenPins();
-      int counter = 0;
-      //Stopwatch.Start();
-      //while (Stopwatch.ElapsedMilliseconds <= TimeInterval )
+      
       foreach (LED led in list) { Console.WriteLine($"Leds: {led}"); }
-      while (counter++ < 20000)
+      
+      int counter = 0;
+      while (counter++ <= 30000)
       {
-        Console.WriteLine($"Counter: {counter}");
-        // Controller.Write(Lights.L25.Column, PinValue.Low);
-        // Controller.Write(Lights.L25.Row, PinValue.High);
+        
         foreach (LED led in list)
         {
           // Console.WriteLine(Stopwatch.ElapsedMilliseconds);  
@@ -121,9 +114,9 @@ namespace RaspberryPi
           //Thread.Sleep(250);
           AllOff();
         }
-        // Controller.Write(Lights.L25.Column, PinValue.High);
-        // Controller.Write(Lights.L25.Row, PinValue.Low);
+        
       }
+      
       Console.WriteLine("Closing Pins");
       ClosePins();
     }

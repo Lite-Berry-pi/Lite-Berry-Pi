@@ -71,30 +71,16 @@ namespace LiteBerryPi
             try
             {
               raspi.SetDisplayTime(int.Parse(args[1]));
-                }
+            }
             catch
             {
               Console.WriteLine("Invalid time entered (miliseconds)");
             }
             break;
         }
-
         Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
       }
-
-      // Just some sample, remove before completion of project
-      //raspi.ReadAllLights();
-
-      //raspi.DisplayLights(makeDiamond);
-
-      //raspi.DisplayLights(makeJ);
-
-      //raspi.DisplayLights(makeDiamond);
-
-
-
-
-
+      // raspi.DisplayLights(makeDiamond);
 
       // Connect to the Websocket, supply the URL
 
@@ -103,66 +89,11 @@ namespace LiteBerryPi
       {
         Console.WriteLine("Press CTRL + C to quit");
         while (true)
-       {
+        {
 
         }
       }
       else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
-
-
-      //Console.WriteLine("Web Socket Started.  Press CTRL + C to exit the App");
-      //while (true)
-      //{
-
-
-      //  if (swatch.ElapsedMilliseconds >= 5000)
-      //  {
-      //    swatch.Reset();
-      //    Console.WriteLine("5 seconds you all!");
-      //    swatch.Start();
-      //  }
-      //}
-
     }
-    /// <summary>
-    /// Connects the LiteBerry Pi to the WebServer Hub via supplied URL
-    /// </summary>
-    /// <param name="url"></param>
-    //public static void Start(string url)
-    //{
-    //  Console.WriteLine("Running Start");
-    //  try
-    //  {
-    //    Console.WriteLine("Gonna Try");
-
-    //    Console.WriteLine($"URL: {url}");
-    //    HubConnection connection = new HubConnectionBuilder()
-    //      .WithUrl(url)
-    //      .WithAutomaticReconnect()
-    //      .Build();
-    //    connection.On<string>("TurnLightsOn", (message) => OnReceiveMessage(message));
-
-    //    var t = connection.StartAsync();
-    //    Console.WriteLine("Waiting");
-    //    t.Wait();
-    //    Console.WriteLine("StartAsync: " + connection.ConnectionId);
-    //    Console.WriteLine($"Connected ... ID: {connection.ConnectionId}");
-    //  }
-    //  catch (Exception e)
-    //  {
-    //    Console.WriteLine("Never Connected");
-    //    Console.WriteLine(e.Message);
-    //    Console.WriteLine(e.InnerException);
-
-    //  }
-    //}
-    /// <summary>
-    /// Converts incoming data to a LED list, display Data.
-    /// </summary>
-    /// <param name="message"></param>
-
-
-
-
   }
 }
