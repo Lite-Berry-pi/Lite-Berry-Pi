@@ -124,6 +124,3 @@ UserDesign 1: many Design
 
 
 ### ERD
-
-
-

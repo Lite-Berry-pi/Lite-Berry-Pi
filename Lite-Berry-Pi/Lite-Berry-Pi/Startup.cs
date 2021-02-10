@@ -11,6 +11,7 @@ using Lite_Berry_Pi.Models.Interfaces.Services;
 using Lite_Berry_Pi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 
 
 namespace Lite_Berry_Pi
@@ -72,7 +73,9 @@ namespace Lite_Berry_Pi
             services.AddTransient<IDesign, DesignRepository>();
             services.AddTransient<IUser, UserRepository>();
 
-            services.AddSignalR();
+            services.AddSignalR()
+               .AddAzureSignalR();
+
             services.AddMvc();
 
             services.AddScoped<JwtTokenService>();
@@ -108,6 +111,10 @@ namespace Lite_Berry_Pi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+
+            app.UseFileServer();
+            
 
             app.UseSwagger(options =>
            {
