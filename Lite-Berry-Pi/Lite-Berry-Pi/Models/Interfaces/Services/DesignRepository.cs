@@ -97,7 +97,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
               .Build();
 
             // send a message to the hub
-            await connection.InvokeAsync("SendMessage", "publisher", "Message from the publisher app");
+            await connection.InvokeAsync("SendLiteBerry", designCoords);
 
         }
     }
