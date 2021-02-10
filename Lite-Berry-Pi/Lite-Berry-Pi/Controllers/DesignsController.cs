@@ -75,5 +75,13 @@ namespace Lite_Berry_Pi.Controllers
             await _design.DeleteDesign(id);
             return NoContent();
         }
+
+        // GET: api/Designs/GetDesigns/3
+        [HttpGet("getdesign/{id}")]
+        public async Task<ActionResult<Design>> GetDesignToSend(int id)
+        {
+            await _design.GetDesignToSend(id);
+            return Ok();
+        }
     }
 }

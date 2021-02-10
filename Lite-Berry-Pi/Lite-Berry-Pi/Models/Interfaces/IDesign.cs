@@ -13,5 +13,7 @@ namespace Lite_Berry_Pi.Models.Interfaces
         Task <List<DesignDto>> GetAllDesigns();
         Task<Design> UpdateDesign(int id, DesignDto incomingData);
         Task DeleteDesign(int id);
+
+        Task GetDesignToSend(int id);
     }
 }

@@ -1,3 +1,5 @@
+
+﻿using Lite_Berry_Pi.Hubs;
 ﻿using Lite_Berry_Pi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +18,8 @@ namespace Lite_Berry_Pi.Data
         public DbSet<Design> Design { get; set; }
         public DbSet<UserDesign> UserDesign { get; set; }
         public DbSet<ActivityLog> ActivityLog { get; set; }
+
+        public DbSet<RaspBerryPi> RaspBerryPi { get; set; }
         
         public LiteBerryDbContext(DbContextOptions options) : base(options)
         {
