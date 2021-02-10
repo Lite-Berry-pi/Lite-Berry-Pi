@@ -1,5 +1,4 @@
 using RaspberryPi;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -19,8 +18,8 @@ namespace RaspberryPiTests
        lights.L2, lights.L3, lights.L4, lights.L8, lights.L13, lights.L18, lights.L23
       };
       List<LED> generatedPattern = lights.CreateLightPattern(testString);
-      
-      Assert.True(Enumerable.SequenceEqual(generatedPattern, expectedPattern));      
+
+      Assert.True(Enumerable.SequenceEqual(generatedPattern, expectedPattern));
     }
   }
 }

@@ -48,7 +48,7 @@ namespace RaspberryPi
       L10 = new LED() { Column = 21, Row = 6, ID = 10 };
       L11 = new LED() { Column = 7, Row = 13, ID = 11 };
       L12 = new LED() { Column = 12, Row = 13, ID = 12 };
-      L13 = new LED() { Column = 16, Row = 13, ID = 13};
+      L13 = new LED() { Column = 16, Row = 13, ID = 13 };
       L14 = new LED() { Column = 20, Row = 13, ID = 14 };
       L15 = new LED() { Column = 21, Row = 13, ID = 15 };
       L16 = new LED() { Column = 7, Row = 19, ID = 16 };
@@ -74,7 +74,7 @@ namespace RaspberryPi
       {
         throw new System.Exception("Input string does no match the elements in Light List");
       }
-      List<LED> newList = new List<LED>();    
+      List<LED> newList = new List<LED>();
 
       for (int i = 0; i < inString.Length; i++)
       {
@@ -83,6 +83,7 @@ namespace RaspberryPi
           newList.Add(AllLights[i]);
         }
       }
+      foreach (LED led in newList) { System.Console.WriteLine(led.ID); }
       return newList;
     }
   }
