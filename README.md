@@ -1,129 +1,147 @@
-# Lite-Berry-Pi
-A Unique Way To Communicate with Friends
-Lite-Berry Pie: Midterm Prep #4
+# LiteBerryPi
 
-## MVP User Stories:
+## Project Lite Berry Pi App
+---
+### We are deployed on Azure!
 
-### As an Admin I can:
-Give users permissions to login to the app
-Create new lite-berry designs
-Look up which users sent a lite-berry and when
-Update lite-berry patterns
-Delete lite-berry patterns 
-View a list users
-View a list of activity
+[SwaggerUI](https://lite-berry-pi20210208174150.azurewebsites.net/index.html)<br>
 
-### As a User I can:
-log in to the app with a password
-select from a predetermined list of lite-berries to send
-see a history of the lite-berries I’ve sent
+---
+## Web Application
+***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-#### Stretch Goal User Stories:
+The web application consists of a frontend written in Razor views, HTML, CSS,
+Bootstrap, Popper, and jQuery. The backend was written in C# using ASP.NET Core 2, Entity Framework Core, and the MVC framework.
 
-#### As an Admin I can 
-rerun the lite-berries that have been sent previously
+An interface is provided to create new blog
+posts, view existing blog posts, edit existing blog posts, delete existing
+blog posts, and search by both keywords and usernames. All blog posts can be
+enriched using Azure Language Services (part of Microsoft's Cognitive Services
+suite), Bing Image API, and Parallel Dots (for automated tagging of posts via
+key phrases detected within the post's body). Image enrichments can be added
+based on the overall sentiment score (a range 0.0 - 1.0 related to the mood
+of the post) and key phrases / keywords detected in the posts. Optionally, users
+can choose to opt-out of these features for privacy or data collection concerns.
 
-#### As a User I can 
-Create my own designs from the app 
-Delete my own designs from the app
+---
 
-### Feature Tasks
+## Tools Used
+Microsoft Visual Studio Community 2017 (Version 15.5.7)
 
-Admin can create user in postman
-Admin can create lite-berry designs in postman
-Admin can update lite-berry designs in postman
-Admin can save lite-berry designs  
-Admin can get a list of users
-Admin can get a list of lite-berries sent by user
-Admin can get a list of activity by day
-User can log into the app
-User can choose from a list of preset lite-berry options
-User can get a list of lite-berries they have sent
-MVP -Admin can rerun all lite-berries that have been sent previously
-MVP- User can create a design from the command line
-MVP - User can delete a design they created from the command line 
+- C#
+- ASP.Net Core
+- Entity Framework
+- MVC
+- xUnit
+- Bootstrap
+- Azure
+- Parallel Dots API
 
-### Acceptance Tasks
+---
 
-Ensure that admin can create user in postman
-Ensure that the user can’t create a user in postman
-Ensure that admin can create lite-berry designs in postman
-Ensure that admin can update lite-berry designs in postman
-Ensure that admin can save lite-berry designs  
-Ensure that admin can get a list of users
-Ensure that user can’t see other users
-Ensure that admin can get a list of lite-berries sent by user
-Ensure that admin can get a list of activity by day
-Ensure that user can log into the app
-Ensure that user must use a password to log into the app
-Ensure that user can choose from a list of preset lite-berry design options
-Ensure that user can get a list of lite-berries they have sent
-MVP - Ensure admin can rerun all lite-berries that have been sent previously
-MVP- Ensure user can create a design from the command line
-MVP- Ensure user can delete a design they created from the command line 
+## Recent Updates
 
+#### V 1.4
+*Added OAuth for MySpace* - 23 Jan 2003
 
-### Software Requirements
+---
 
-#### Vision:
+## Getting Started
 
-What is the vision of this product? 
-	To provide a platform for people to show that they are present with others, when they aren't able to physically be there.
-What pain point does this project solve? 
-Being present in a physical sense when not actually able to be present physically.
+Clone this repository to your local machine.
 
-Why should we care about your product?
-	It is a unique way to communicate with others and show that a user cares, when otherwise limited to phone and video calls, as well as texts or emails. Quarantining further limits social interactions, and Lite-Berry Pi will bring friends and loved ones together despite not being able to physically visit. 
+```
+$ git clone https://github.com/YourRepo/YourProject.git
+```
+Once downloaded, you can either use the dotnet CLI utilities or Visual Studio 2017 (or greater) to build the web application. The solution file is located in the AmandaFE subdirectory at the root of the repository.
+```
+cd YourRepo/YourProject
+dotnet build
+```
+The dotnet tools will automatically restore any NuGet dependencies. Before running the application, the provided code-first migration will need to be applied to the SQL server of your choice configured in the /AmandaFE/AmandaFE/appsettings.json file. This requires the Microsoft.EntityFrameworkCore.Tools NuGet package and can be run from the NuGet Package Manager Console:
+```
+Update-Database
+```
+Once the database has been created, the application can be run. Options for running and debugging the application using IIS Express or Kestrel are provided within Visual Studio. From the command line, the following will start an instance of the Kestrel server to host the application:
+```
+cd YourRepo/YourProject
+dotnet run
+```
+Unit testing is included in the AmandaFE/FrontendTesting project using the xUnit test framework. Tests have been provided for models, view models, controllers, and utility classes for the application.
 
+---
 
-### Scope (In/Out)
+## Usage
+***[Provide some images of your app with brief description as title]***
 
-### In:
-Users will be able to log in to their profile in the program
-Users will be able to access existing lite-berry patterns to select and send to the Raspberry Pi device
-Administrators will be able to delete saved lite-berry designs from the database 
-	
-### Out:
-Users will only be able to light LED lights on the raspberry pi. Sending braille or sound signals is out of scope
-Users won’t be able to create animations on the raspberry pi with multiple sends in a row
-Users won’t be able to control the timing of the event (ie send lite-berry 10 minutes from now)
+### Overview of Recent Posts
+![Overview of Recent Posts](https://via.placeholder.com/500x250)
 
-### MVP
-	Our app will allow a user to select a lite-berry pattern and that pattern will be displayed on a Raspberry Pi device. Administrators will be able to view user activity, create, delete, and update lite-berry designs. Users will also be able to log in to their profile, and save their selected designs. 
+### Creating a Post
+![Post Creation](https://via.placeholder.com/500x250)
 
-### Stretch Goals:
-	Users will be able to create their own designs, as well as delete their saved designs.
+### Enriching a Post
+![Enriching Post](https://via.placeholder.com/500x250)
 
-### Functional Requirements:
+### Viewing Post Details
+![Details of Post](https://via.placeholder.com/500x250)
 
-Admin can create user in postman
-Admin can create lite-berry designs in postman
-Admin can update lite-berry designs in postman
-Admin can save lite-berry designs  
-Admin can get a list of users
-Admin can get a list of lite-berries sent by user
-Admin can get a list of activity by day
-User can log into the app
-User can choose from a list of preset lite-berry options
-User can get a list of lite-berries they have sent
-MVP -Admin can rerun all lite-berries that have been sent previously
-MVP- User can create a design from the command line
-MVP - User can delete a design they created from the command line 
+---
+## Data Flow (Frontend, Backend, REST API)
+***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
+![Data Flow Diagram](/assets/img/flowchart.png)
 
-### Non-Functional Requirements:
-Security: User's will be required to log in to the program in order to access it's functions.
-Access: Program will be deployed to Azure, and will be accessible 24/7 for at least a year from it's deployment date.
-	
-### Data Flow
-User  1:many UserDesign
-User  1:1  ActivityLog
-UserDesign 1: many Design
+---
+## Data Model
 
-### Domain Model
+### Overall Project Schema
+***[Add a description of your DB schema. Explain the relationships to me.]***
+![Database Schema](/assets/img/erd.png)
+
+---
+## Model Properties and Requirements
+
+### Blog
+
+| Parameter | Type | Required |
+| --- | --- | --- |
+| ID  | int | YES |
+| Summary | string | YES |
+| Content | string | YES |
+| Tags | string(s) | NO |
+| Picture | img jpeg/png | NO |
+| Sentiment | float | NO |
+| Keywords | string(s) | NO |
+| Related Posts | links | NO |
+| Date | date/time object | YES |
 
 
+### User
 
-### ERD
+| Parameter | Type | Required |
+| --- | --- | --- |
+| ID  | int | YES |
+| Name/Author | string | YES |
+| Posts | list | YES |
 
+---
 
+## Change Log
+***[The change log will list any changes made to the code base. This includes any changes from TA/Instructor feedback]***
+1.4: *Added OAuth for MySpace* - 23 Jan 2003
+1.3: *Changed email handler to Alta Vista, fixed issue with styling on Netscape Navigator browser.* - 21 Dec 1999
+1.2: *Fixed bug where pages would not load due to temp data* - 16 Jun 1998
+1.1: *Added ability for user to change photos on a post* - 12 May 1998
 
+---
+
+## Authors
+Albus Dumbbledore
+Igor Karkaroff
+Minerva McGonagall
+Leta Lestrange
+Gellert Grindelwald
+
+---
+
+For more information on Markdown: https://www.markdownguide.org/cheat-sheet

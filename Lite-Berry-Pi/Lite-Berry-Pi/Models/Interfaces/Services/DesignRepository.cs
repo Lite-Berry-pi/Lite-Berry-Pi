@@ -57,6 +57,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         public async Task<DesignDto> GetDesign(int id)
         {
             return await _context.Design
+                .Where(design => design.Id == id)
                 .Select(design => new DesignDto
                 {
                     Id = id,
@@ -89,7 +90,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
 
             string designCoords = design.DesignCoords;
 
-            var url = "https://localhost:44371/raspberrypi";
+            var url = "https://liteberrypiserver.azurewebsites.net/raspberrypi";
 
             HubConnection connection = new HubConnectionBuilder()
               .WithUrl(url)
@@ -98,10 +99,8 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
 
             var t = connection.StartAsync();
             t.Wait();
-
             // send a message to the hub
             await connection.InvokeAsync("SendLiteBerry", designCoords);
-
         }
     }
 }
