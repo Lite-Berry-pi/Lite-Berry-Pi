@@ -9,9 +9,11 @@ using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lite_Berry_Pi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,6 +25,8 @@ namespace Lite_Berry_Pi.Controllers
             _user = user;
         }
 
+        [AllowAnonymous]
+
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUser()
@@ -30,6 +34,7 @@ namespace Lite_Berry_Pi.Controllers
             return Ok(await _user.GetListOfUsers());
         }
 
+        [AllowAnonymous]
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
@@ -43,7 +48,7 @@ namespace Lite_Berry_Pi.Controllers
 
             return user;
         }
-
+        [Authorize(Roles = "Administrator")]
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -58,6 +63,7 @@ namespace Lite_Berry_Pi.Controllers
             return Ok(updatedUser);
         }
 
+        [AllowAnonymous]
         // POST: api/Users
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -67,7 +73,7 @@ namespace Lite_Berry_Pi.Controllers
             await _user.CreateUser(user);
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
-
+        [Authorize(Roles = "Administrator")]
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
