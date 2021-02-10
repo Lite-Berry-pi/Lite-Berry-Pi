@@ -89,12 +89,15 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
 
             string designCoords = design.DesignCoords;
 
-            var url = "https://localhost:44371/liteberrypi";
+            var url = "https://localhost:44371/raspberrypi";
 
             HubConnection connection = new HubConnectionBuilder()
               .WithUrl(url)
               .WithAutomaticReconnect()
               .Build();
+
+            var t = connection.StartAsync();
+            t.Wait();
 
             // send a message to the hub
             await connection.InvokeAsync("SendLiteBerry", designCoords);

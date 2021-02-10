@@ -128,17 +128,9 @@ namespace Lite_Berry_Pi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserDesignDesignId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserDesignUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityLogId");
-
-                    b.HasIndex("UserDesignUserId", "UserDesignDesignId");
 
                     b.ToTable("Design");
 
@@ -208,6 +200,9 @@ namespace Lite_Berry_Pi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "DesignId");
+
+                    b.HasIndex("DesignId")
+                        .IsUnique();
 
                     b.ToTable("UserDesign");
 
@@ -425,14 +420,16 @@ namespace Lite_Berry_Pi.Migrations
                     b.HasOne("Lite_Berry_Pi.Models.ActivityLog", null)
                         .WithMany("Designs")
                         .HasForeignKey("ActivityLogId");
-
-                    b.HasOne("Lite_Berry_Pi.Models.UserDesign", "UserDesign")
-                        .WithMany("Designs")
-                        .HasForeignKey("UserDesignUserId", "UserDesignDesignId");
                 });
 
             modelBuilder.Entity("Lite_Berry_Pi.Models.UserDesign", b =>
                 {
+                    b.HasOne("Lite_Berry_Pi.Models.Design", "Designs")
+                        .WithOne("UserDesign")
+                        .HasForeignKey("Lite_Berry_Pi.Models.UserDesign", "DesignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Lite_Berry_Pi.Models.User", "User")
                         .WithMany("UserDesigns")
                         .HasForeignKey("UserId")
