@@ -9,7 +9,7 @@ namespace Lite_Berry_Pi.Models.Api
     public class ApplicationUserDto
     {
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Username { get; set; }
 
