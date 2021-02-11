@@ -9,9 +9,12 @@ using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models;
 using Lite_Berry_Pi.Models.Interfaces;
 using Lite_Berry_Pi.Models.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Lite_Berry_Pi.Controllers
 {
+    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class DesignsController : ControllerBase
@@ -22,14 +25,14 @@ namespace Lite_Berry_Pi.Controllers
         {
             _design = design;
         }
-
+        [AllowAnonymous]
         // GET: api/Designs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Design>>> GetDesigns()
         {
             return Ok(await _design.GetAllDesigns());
         }
-
+        [AllowAnonymous]
         // GET: api/Designs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DesignDto>> GetDesign(int id)
@@ -42,7 +45,7 @@ namespace Lite_Berry_Pi.Controllers
             }
             return design;
         }
-
+        [Authorize(Roles = "Administrator")]
         // PUT: api/Designs/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -58,6 +61,7 @@ namespace Lite_Berry_Pi.Controllers
             return Ok(updatedDesign);
         }
 
+        [AllowAnonymous]
         // POST: api/Designs
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -67,7 +71,7 @@ namespace Lite_Berry_Pi.Controllers
             await _design.CreateDesign(incomingData);
             return CreatedAtAction("GetDesign", new { id = incomingData.Id  }, incomingData);
         }
-
+        [Authorize(Roles = "Administrator")]
         // DELETE: api/Designs/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Design>> DeleteDesign(int id)
@@ -75,7 +79,8 @@ namespace Lite_Berry_Pi.Controllers
             await _design.DeleteDesign(id);
             return NoContent();
         }
-
+        
+        [AllowAnonymous]
         // GET: api/Designs/GetDesigns/3
         [HttpGet("getdesign/{id}")]
         public async Task<ActionResult<Design>> GetDesignToSend(int id)

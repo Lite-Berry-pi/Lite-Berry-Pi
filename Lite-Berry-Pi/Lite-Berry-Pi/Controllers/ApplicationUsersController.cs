@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lite_Berry_Pi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ApplicationUsersController : ControllerBase
@@ -20,6 +21,7 @@ namespace Lite_Berry_Pi.Controllers
         {
             userService = service;
         }
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<ActionResult<ApplicationUserDto>> Register(RegisterUser data)
         {
@@ -34,7 +36,7 @@ namespace Lite_Berry_Pi.Controllers
         }
 
 
-
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<ApplicationUserDto>> Login(LoginData data)
         {
