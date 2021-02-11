@@ -15,6 +15,7 @@ namespace LiteBerryPi
       Lights light = new Lights();
       RaspPi raspi = new RaspPi(light, controller);
       raspi.ClosePins();
+      
       List<LED> makeJ = new List<LED>() {
         raspi.Lights.L3,
         raspi.Lights.L3,
@@ -80,13 +81,14 @@ namespace LiteBerryPi
         }
         Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
       }
-      // raspi.DisplayLights(makeDiamond);
+      //raspi.DisplayLights(makeDiamond);
 
       // Connect to the Websocket, supply the URL
 
       bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
       if (startSuccess)
       {
+        raspi.ReadAllLights();
         Console.WriteLine("Press CTRL + C to quit");
         while (true)
         {

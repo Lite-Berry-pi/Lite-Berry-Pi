@@ -21,8 +21,7 @@ namespace RaspberryPi
       Controller = controller;
       PinsUsedRows = new int[] { 5, 6, 13, 19, 26 };
       PinsUsedColumns = new int[] { 7, 12, 16, 20, 21 };
-      TimeInterval = 5000;
-     
+      TimeInterval = 5000;     
     }
     public void SetDisplayTime(int time = 5000)
     {
@@ -44,16 +43,16 @@ namespace RaspberryPi
     {
       for (int i = 0; i < PinsUsedRows.Length; i++)
       {
-        Console.WriteLine($"{Controller.IsPinOpen(PinsUsedRows[i])}");
+        
         if (Controller.IsPinOpen(PinsUsedRows[i]))
         {
-          Console.WriteLine($"Closing Pin: {PinsUsedRows[i]}");
+          
           Controller.ClosePin(PinsUsedRows[i]);
         }
-        Console.WriteLine($"{Controller.IsPinOpen(PinsUsedColumns[i])}");
+       
         if (Controller.IsPinOpen(PinsUsedColumns[i]))
         {
-          Console.WriteLine($"Closing Pin: {PinsUsedColumns[i]}");
+          
           Controller.ClosePin(PinsUsedColumns[i]);
         }
       }
@@ -76,9 +75,9 @@ namespace RaspberryPi
     {
       OpenPins();
       int timesIterated = 0;
-      while (timesIterated++ <= 2)
+      while (timesIterated++ <= 1)
       {
-        Console.WriteLine($"AllLights: {Lights.AllLights.Count}  First LED Info: {Lights.AllLights[0].Column}   {Lights.AllLights[0].Row} ");
+       
 
         foreach (LED led in Lights.AllLights)
         {
@@ -96,19 +95,24 @@ namespace RaspberryPi
     }
     public void DisplayLights(List<LED> list)
     {
+      Stopwatch stopW = new Stopwatch();
+      stopW.Start();
       Console.WriteLine("Starting Display Lights");      
       ClosePins();
       OpenPins();
       
-      foreach (LED led in list) { Console.WriteLine($"Leds: {led}"); }
+
+
+      foreach (LED led in list) { Console.WriteLine($"LEDs: {led.ID}"); }
       
-      int counter = 0;
-      while (counter++ <= 30000)
+      long counter = stopW.ElapsedMilliseconds;
+
+      while (stopW.ElapsedMilliseconds <= counter + TimeInterval)
       {
         
         foreach (LED led in list)
         {
-          // Console.WriteLine(Stopwatch.ElapsedMilliseconds);  
+          
           Controller.Write(led.Column, PinValue.Low);
           Controller.Write(led.Row, PinValue.High);
           //Thread.Sleep(250);
@@ -116,7 +120,7 @@ namespace RaspberryPi
         }
         
       }
-      
+      stopW.Stop();
       Console.WriteLine("Closing Pins");
       ClosePins();
     }
@@ -154,7 +158,7 @@ namespace RaspberryPi
       Console.WriteLine($"Message Received: {message}");
       List<LED> displayMessage = Lights.CreateLightPattern(message);
       Console.WriteLine("Sending the following to Display lights");
-      foreach(LED led in displayMessage) { Console.Write(led.ID); }
+      foreach(LED led in displayMessage) { Console.Write($"{led.ID}, "); }
       Console.WriteLine();
       DisplayLights(displayMessage);
     }
