@@ -97,6 +97,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         /// update user
         public async Task<User> UpdateUser(int id, User user)
         {
+
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return user;
