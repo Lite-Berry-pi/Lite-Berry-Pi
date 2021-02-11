@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lite-Berry-Pi", "Lite-Berry-Pi\Lite-Berry-Pi.csproj", "{5FD5D65F-BE05-48CC-A95E-A429715B1164}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lite-Berry-Pi", "Lite-Berry-Pi\Lite-Berry-Pi.csproj", "{5FD5D65F-BE05-48CC-A95E-A429715B1164}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaspberryPi", "..\LiteBerryPi\RaspberryPi.csproj", "{6382BE95-C180-484E-9B0A-844572B55928}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "MockDatabaseTest\Tests.csproj", "{F26FC685-6571-44DE-A1B7-C5082B5BE63A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FD5D65F-BE05-48CC-A95E-A429715B1164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6382BE95-C180-484E-9B0A-844572B55928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6382BE95-C180-484E-9B0A-844572B55928}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6382BE95-C180-484E-9B0A-844572B55928}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6382BE95-C180-484E-9B0A-844572B55928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26FC685-6571-44DE-A1B7-C5082B5BE63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26FC685-6571-44DE-A1B7-C5082B5BE63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26FC685-6571-44DE-A1B7-C5082B5BE63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26FC685-6571-44DE-A1B7-C5082B5BE63A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

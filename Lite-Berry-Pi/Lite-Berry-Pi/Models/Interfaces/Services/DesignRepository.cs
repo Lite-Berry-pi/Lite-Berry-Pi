@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lite_Berry_Pi.Data;
 using Lite_Berry_Pi.Models.Api;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lite_Berry_Pi.Models.Interfaces.Services
@@ -56,6 +57,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         public async Task<DesignDto> GetDesign(int id)
         {
             return await _context.Design
+                .Where(design => design.Id == id)
                 .Select(design => new DesignDto
                 {
                     Id = id,
@@ -75,6 +77,30 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             _context.Entry(design).State =  Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
             return design;
+        }
+
+        public async Task GetDesignToSend(int id)
+        {
+            var design = await GetDesign(id);
+
+            if (design == null)
+            {
+                throw new ArgumentNullException("The design is empty");
+            }
+
+            string designCoords = design.DesignCoords;
+
+            var url = "https://liteberrypiserver.azurewebsites.net/raspberrypi";
+
+            HubConnection connection = new HubConnectionBuilder()
+              .WithUrl(url)
+              .WithAutomaticReconnect()
+              .Build();
+
+            var t = connection.StartAsync();
+            t.Wait();
+            // send a message to the hub
+            await connection.InvokeAsync("SendLiteBerry", designCoords);
         }
     }
 }
