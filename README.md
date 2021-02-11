@@ -3,9 +3,23 @@
 ## Project Lite Berry Pi App
 ---
 ### We are deployed on Azure!
-[Server](https://liteberrypiserver.azurewebsites.net/)<br>
+[Deployed Server](https://liteberrypiserver.azurewebsites.net/)<br>
+[Server GitHub](https://github.com/Lite-Berry-pi/lite-berry-pi-server)<br>
 
 [App / SwaggerUI](https://lite-berry-pi20210208174150.azurewebsites.net/index.html)<br>
+
+---
+## Table of Contents
++ [Tools Used](#tools-used)
++ [Getting Started](#getting-started)
++ [Usage](#usage)
++ [Data Flow](#data-flow)
++ [Data Models](#data-models)
++ [Model Props and Requirements](#model-properties-and-requirements)
++ [The RaspBerryPi Schematics](#the-raspberrypi-schematics)
++ [Change Log](#change-log)
++ [Authors](#authors)
++ [Attributions](#attributions)
 
 ---
 ## Web Application
@@ -31,7 +45,7 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
 ---
 
 
-## Getting Start
+## Getting Started
 
 How to use the thing
 
@@ -41,26 +55,30 @@ How to use the thing
 ***[Provide some images of your app with brief description as title]***
 
 
+
 ### Creating a LiteBerry Design
-![Post Creation](https://via.placeholder.com/500x250)
+![Post Creation](assets/post.png)
+![Post Response](assets/post_res.png)
 
 ### Sending a LiteBerry Design
-![Enriching Post](https://via.placeholder.com/500x250)
+![Enriching Post](assets/get.png)
 
 ### The RaspBerryPi
-![Details of Post](https://via.placeholder.com/500x250)
+![Details of Post](assets/liteberry.png)
 
 ---
-## Data Flow (Frontend, Backend, REST API)
-### Data Flow
+## Data Flow
+![Domain](assets/Lite-Berry_domain.png)
+
+### ERD
+
+![Data Flow Diagram](/assets/Lite-Berry_ERD.png)
 + User  1:many UserDesign
 + User  1:1  ActivityLog
 + UserDesign 1: many Design
 
-![Data Flow Diagram](/assets/Lite-Berry_ERD.png)
-
 ---
-## Data Model
+## Data Models
 
 ### User Schema
 *route:* `/api/user`
@@ -233,6 +251,11 @@ How to use the thing
 </table>
 ---
 
+## The RaspBerryPi Schematics
+![Schematics](assets/RaspLEDWB.png)
+
+---
+
 ## Change Log
 + *02/08/2021* - 
   + Wired up the ASP.NET Core MVC Api App.
@@ -242,11 +265,11 @@ How to use the thing
 ---
 
 ## Authors
-+ JP Jones
-+ Kjell Overholt
-+ Krystian Francuz-Harris
-+ Michael Falk
-+ Scott Falbo
++ [JP Jones](https://github.com/4a50)
++ [Kjell Overholt](https://github.com/Overholtk)
++ [Krystian Francuz-Harris](https://github.com/KrystianFH)
++ [Michael Falk](https://github.com/MikeyFalk)
++ [Scott Falbo](https://github.com/scottfalbo)
 
 ## Attributions
 + Bade Habib
