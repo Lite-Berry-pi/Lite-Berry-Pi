@@ -9,7 +9,7 @@ namespace LiteBerryPi
   {
     static void Main(string[] args)
     {
-
+      bool isTest = false;
       // Initial Raspberry Pi GPIO and Light Grid setup
       GpioController controller = new GpioController();
       Lights light = new Lights();
@@ -78,22 +78,28 @@ namespace LiteBerryPi
             {
               Console.WriteLine("Invalid time entered (miliseconds)");
             }
-            break;          
+            break;
+          case "disptest":
+            raspi.ReadAllLights();
+            isTest = true;
+            break;
         }
         Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
       }
-      
-      bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
-      if (startSuccess)
+      if (!isTest)
       {
-        raspi.ReadAllLights();
-        Console.WriteLine("Press CTRL + C to quit");
-        while (true)
+        bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
+        if (startSuccess)
         {
+          raspi.ReadAllLights();
+          Console.WriteLine("Press CTRL + C to quit");
+          while (true)
+          {
 
+          }
         }
+        else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
       }
-      else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
     }
   }
 }
