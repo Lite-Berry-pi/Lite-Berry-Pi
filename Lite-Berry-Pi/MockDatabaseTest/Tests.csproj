@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\LiteBerryPi\RaspberryPi.csproj" />
     <ProjectReference Include="..\Lite-Berry-Pi\Lite-Berry-Pi.csproj" />
   </ItemGroup>
 
