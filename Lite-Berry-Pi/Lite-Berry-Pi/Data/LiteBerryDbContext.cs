@@ -29,8 +29,8 @@ namespace Lite_Berry_Pi.Data
 
            base.OnModelCreating(modelBuilder);
            
-           SeedRole(modelBuilder, "Administrator","create","update","delete");
-           SeedRole(modelBuilder, "User","read","send");
+           SeedRole(modelBuilder, "Administrator","create","update","delete", "send", "read");
+           SeedRole(modelBuilder, "User","read","send", "create");
 
             modelBuilder.Entity<UserDesign>().HasKey(
                 x => new { x.UserId, x.DesignId });

@@ -33,6 +33,7 @@ namespace Lite_Berry_Pi.Controllers
             return Ok(await _design.GetAllDesigns());
         }
         [AllowAnonymous]
+
         // GET: api/Designs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DesignDto>> GetDesign(int id)
@@ -45,6 +46,7 @@ namespace Lite_Berry_Pi.Controllers
             }
             return design;
         }
+
         [Authorize(Roles = "Administrator")]
         // PUT: api/Designs/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -61,7 +63,9 @@ namespace Lite_Berry_Pi.Controllers
             return Ok(updatedDesign);
         }
 
-        [AllowAnonymous]
+        //[Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "user")]
+        //[AllowAnonymous]
         // POST: api/Designs
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -71,6 +75,7 @@ namespace Lite_Berry_Pi.Controllers
             await _design.CreateDesign(incomingData);
             return CreatedAtAction("GetDesign", new { id = incomingData.Id  }, incomingData);
         }
+
         [Authorize(Roles = "Administrator")]
         // DELETE: api/Designs/5
         [HttpDelete("{id}")]

@@ -21,10 +21,12 @@ namespace Lite_Berry_Pi.Controllers
         {
             userService = service;
         }
+
         [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<ActionResult<ApplicationUserDto>> Register(RegisterUser data)
         {
+            //data.Roles = "User";
             var user = await userService.Register(data, this.ModelState);
 
             if (ModelState.IsValid)

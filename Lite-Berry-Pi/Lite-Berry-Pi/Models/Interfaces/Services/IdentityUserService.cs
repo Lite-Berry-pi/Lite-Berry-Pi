@@ -22,21 +22,18 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             tokenService = jwtTokenService;
         }
 
-        public async Task<ApplicationUserDto> Register(RegisterUser data, ModelStateDictionary modelState
-            )
+        public async Task<ApplicationUserDto> Register(RegisterUser data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
-                UserName = data.Username,  
-                
-               
-
+                UserName = data.Username,
             };
 
             var result = await userManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, "User");
                 return new ApplicationUserDto
                 {
                     Id = user.Id,
@@ -63,7 +60,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
                 {
                     Id = user.Id,
                     Username = user.UserName,
-                    Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(15))
+                    Token = await tokenService.GetToken(user, System.TimeSpan.FromHours(2))
                 };
 
             }
@@ -77,7 +74,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             {
                 Id = user.Id,
                 Username = user.UserName,
-                Token = await tokenService.GetToken(user, System.TimeSpan.FromMinutes(5))
+                Token = await tokenService.GetToken(user, System.TimeSpan.FromHours(2))
             };
         }
 
