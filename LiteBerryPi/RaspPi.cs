@@ -23,14 +23,26 @@ namespace RaspberryPi
       PinsUsedColumns = new int[] { 7, 12, 16, 20, 21 };
       TimeInterval = 5000;
     }
+    /// <summary>
+    /// Set's the private integer TimeInterval for LED display
+    /// (milliseconds)
+    /// </summary>
+    /// <param name="time"></param>
     public void SetDisplayTime(int time = 5000)
     {
       TimeInterval = time;
     }
+    /// <summary>
+    /// Returns the Value of the TimeInterval
+    /// </summary>
+    /// <returns></returns>
     public int GetDisplayTime()
     {
       return TimeInterval;
     }
+    /// <summary>
+    /// Turns All LEDs in the Grid to Off
+    /// </summary>
     public void AllOff()
     {
       for (int i = 0; i < PinsUsedRows.Length; i++)
@@ -39,6 +51,9 @@ namespace RaspberryPi
         Controller.Write(PinsUsedColumns[i], PinValue.High);
       }
     }
+    /// <summary>
+    /// Closes Pins used on the LiteBerry Pi when manipulation complete
+    /// </summary>
     public void ClosePins()
     {
       for (int i = 0; i < PinsUsedRows.Length; i++)
@@ -57,8 +72,12 @@ namespace RaspberryPi
         }
       }
     }
+    /// <summary>
+    /// Open all pins for manipulation
+    /// </summary>
     public void OpenPins()
     {
+      Console.WriteLine("Opening Pins");
       for (int i = 0; i < PinsUsedRows.Length; i++)
       {
         //Open pins
@@ -71,11 +90,16 @@ namespace RaspberryPi
       }
       AllOff();
     }
-    public void ReadAllLights()
+    /// <summary>
+    /// /// Display Test Of All Lights in the grid being lit up in a cycling pattern
+    /// Parameter: Number of times to perform the cycle.
+    /// </summary>
+    /// <param name="loop"></param>
+    public void ReadAllLights(int loop = 2)
     {
       OpenPins();
       int timesIterated = 0;
-      while (timesIterated++ <= 1)
+      while (timesIterated++ <= loop)
       {
 
 
@@ -93,6 +117,12 @@ namespace RaspberryPi
       }
       ClosePins();
     }
+    /// <summary>
+    /// Takes in a Lost of LED objects and will scan them for the desired
+    /// length of time.  Determined by TimeInterval Property
+    /// </summary>
+    /// <param name="list"></param>
+
     public void DisplayLights(List<LED> list)
     {
       Stopwatch stopW = new Stopwatch();
@@ -100,11 +130,7 @@ namespace RaspberryPi
       Console.WriteLine("Starting Display Lights");
       ClosePins();
       OpenPins();
-
-
-
-      foreach (LED led in list) { Console.WriteLine($"LEDs: {led.ID}"); }
-
+      
       long counter = stopW.ElapsedMilliseconds;
 
       while (stopW.ElapsedMilliseconds <= counter + TimeInterval)
@@ -124,6 +150,11 @@ namespace RaspberryPi
       Console.WriteLine("Closing Pins");
       ClosePins();
     }
+    /// <summary>
+    /// This will start the Async Connection to the Hub Server, and wait for input.
+    /// </summary>
+    /// <param name="url"></param>
+    /// <returns></returns>
     public bool Start(string url)
     {
       Console.WriteLine("Running Start");
@@ -153,11 +184,16 @@ namespace RaspberryPi
         return false;
       }
     }
+    /// <summary>
+    /// When message is recieved from the server, it converts the message and 
+    /// invokes the DisplayLights Method.
+    /// </summary>
+    /// <param name="message"></param>
     private void OnReceiveMessage(string message)
     {
       Console.WriteLine($"Message Received: {message}");
       List<LED> displayMessage = Lights.CreateLightPattern(message);
-      Console.WriteLine("Sending the following to Display lights");
+      Console.WriteLine("List of Lights Scanned");
       foreach (LED led in displayMessage) { Console.Write($"{led.ID}, "); }
       Console.WriteLine();
       DisplayLights(displayMessage);

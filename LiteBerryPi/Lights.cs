@@ -68,6 +68,11 @@ namespace RaspberryPi
         L20, L21, L22, L23, L24, L25
       };
     }
+    /// <summary>
+    /// Convert a String of data to a LED List object for Display
+    /// </summary>
+    /// <param name="inString"></param>
+    /// <returns></returns>
     public List<LED> CreateLightPattern(string inString)
     {
       if (AllLights.Count != inString.Length)
