@@ -4,8 +4,6 @@ namespace RaspberryPi
 {
   public class Lights
   {
-    //List<LED> AllLight { get; set; }
-
     public List<LED> AllLights { get; set; }
     public LED L1 { get; set; }
     public LED L2 { get; set; }
@@ -32,8 +30,6 @@ namespace RaspberryPi
     public LED L23 { get; set; }
     public LED L24 { get; set; }
     public LED L25 { get; set; }
-
-
     public Lights()
     {
       L1 = new LED() { Column = 7, Row = 5, ID = 1 };
@@ -68,12 +64,19 @@ namespace RaspberryPi
         L20, L21, L22, L23, L24, L25
       };
     }
+    /// <summary>
+    /// Convert a String of data to a LED List object for Display
+    /// </summary>
+    /// <param name="inString"></param>
+    /// <returns></returns>
     public List<LED> CreateLightPattern(string inString)
     {
       if (AllLights.Count != inString.Length)
       {
         throw new System.Exception("Input string does no match the elements in Light List");
       }
+      
+
       List<LED> newList = new List<LED>();
 
       for (int i = 0; i < inString.Length; i++)
@@ -86,5 +89,6 @@ namespace RaspberryPi
       foreach (LED led in newList) { System.Console.WriteLine(led.ID); }
       return newList;
     }
+
   }
 }
