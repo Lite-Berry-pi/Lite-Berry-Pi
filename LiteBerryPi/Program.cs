@@ -9,13 +9,13 @@ namespace LiteBerryPi
   {
     static void Main(string[] args)
     {
-
+      bool isTest = false;
       // Initial Raspberry Pi GPIO and Light Grid setup
       GpioController controller = new GpioController();
       Lights light = new Lights();
       RaspPi raspi = new RaspPi(light, controller);
       raspi.ClosePins();
-
+      //Pre-Set LED Displays
       List<LED> makeJ = new List<LED>() {
         raspi.Lights.L3,
         raspi.Lights.L3,
@@ -47,6 +47,7 @@ namespace LiteBerryPi
         {
           light.L3, light.L7, light.L9, light.L11, light.L15, light.L17, light.L19, light.L23
         };
+      //Handling CLI args
       if (args.Length != 0)
       {
         switch (args[0])
@@ -78,24 +79,30 @@ namespace LiteBerryPi
               Console.WriteLine("Invalid time entered (miliseconds)");
             }
             break;
+          case "disptest":
+            raspi.ReadAllLights();
+            isTest = true;
+            break;
+          case "squareburst":
+            raspi.SquareBurst();
+            isTest = true;
+            break;
         }
         Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
       }
-      //raspi.DisplayLights(makeDiamond);
-
-      // Connect to the Websocket, supply the URL
-
-      bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
-      if (startSuccess)
+      if (!isTest)
       {
-        raspi.ReadAllLights();
-        Console.WriteLine("Press CTRL + C to quit");
-        while (true)
+        bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
+        if (startSuccess)
         {
-
+          raspi.ReadAllLights();
+          Console.WriteLine("Press CTRL + C to quit");
+          while (true)
+          {
+          }
         }
+        else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
       }
-      else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
     }
   }
 }
