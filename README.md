@@ -74,6 +74,8 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
 
 + Anyone can see the designs and send existing designs via the SwaggerUI.
 + To create new designs you have to be logged in.  Login in with the API route above.  Use that bearer token on postman to authorize the POST request.
+  + `https://lite-berry-pi20210208174150.azurewebsites.net/api/designs` to GET and POST designs.
+  + `https://lite-berry-pi20210208174150.azurewebsites.net/api/designs/getdesign/{id}` to send a LiteBerry.
 
 ### Creating a LiteBerry Design
 ![Post Creation](assets/post.png)
@@ -300,6 +302,7 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
 + *02/11/2021* - 
   + Assigned roles to users at time of registration.
   + Added permissions to the route controllers.
+  + Added tests for translating a `string` to light Ids, creating a User and Design, and communicating with the Hub server.
 
 ---
 
