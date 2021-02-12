@@ -75,6 +75,8 @@ namespace RaspberryPi
       {
         throw new System.Exception("Input string does no match the elements in Light List");
       }
+      
+
       List<LED> newList = new List<LED>();
 
       for (int i = 0; i < inString.Length; i++)
@@ -87,5 +89,6 @@ namespace RaspberryPi
       foreach (LED led in newList) { System.Console.WriteLine(led.ID); }
       return newList;
     }
+
   }
 }

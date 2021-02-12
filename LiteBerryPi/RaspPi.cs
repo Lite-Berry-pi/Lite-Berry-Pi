@@ -193,10 +193,43 @@ namespace RaspberryPi
     {
       Console.WriteLine($"Message Received: {message}");
       List<LED> displayMessage = Lights.CreateLightPattern(message);
-      Console.WriteLine("List of Lights Scanned");
-      foreach (LED led in displayMessage) { Console.Write($"{led.ID}, "); }
-      Console.WriteLine();
-      DisplayLights(displayMessage);
+      if (displayMessage.Count == 0)
+      {
+        Console.WriteLine("SquareBurst Initiated");
+        SquareBurst();
+      }
+      else
+      {
+        Console.WriteLine("List of Lights Scanned");
+        foreach (LED led in displayMessage) { Console.Write($"{led.ID}, "); }
+        Console.WriteLine();
+        DisplayLights(displayMessage);
+      }
     }
+    public void SquareBurst()
+    {
+      int ogTimeInterval = TimeInterval;
+      TimeInterval = 500;
+      List<LED> stepOne = new List<LED>() { Lights.L13 };
+      List<LED> stepTwo = new List<LED>() { Lights.L8, Lights.L12, Lights.L14, Lights.L18 };
+      List<LED> stepThree = new List<LED>() { Lights.L3, Lights.L7, Lights.L9, Lights.L11, Lights.L15, Lights.L17, Lights.L19, Lights.L23 };
+      List<LED> stepFour = new List<LED>() { Lights.L2, Lights.L4, Lights.L6, Lights.L10, Lights.L16, Lights.L22, Lights.L24, Lights.L20 };
+      List<LED> stepFive = new List<LED>() { Lights.L1, Lights.L5, Lights.L21, Lights.L25};
+      DisplayLights(stepOne);
+      DisplayLights(stepTwo);
+      DisplayLights(stepThree);
+      DisplayLights(stepFour);
+      DisplayLights(stepFive);
+            
+      DisplayLights(stepFive);
+      DisplayLights(stepFour);
+      DisplayLights(stepThree);
+      DisplayLights(stepTwo);
+      DisplayLights(stepOne);
+
+      TimeInterval = ogTimeInterval;
+
+    }
+    
   }
 }

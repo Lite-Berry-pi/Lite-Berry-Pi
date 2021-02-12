@@ -83,6 +83,10 @@ namespace LiteBerryPi
             raspi.ReadAllLights();
             isTest = true;
             break;
+          case "squareburst":
+            raspi.SquareBurst();
+            isTest = true;
+            break;
         }
         Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
       }
@@ -95,7 +99,6 @@ namespace LiteBerryPi
           Console.WriteLine("Press CTRL + C to quit");
           while (true)
           {
-
           }
         }
         else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
