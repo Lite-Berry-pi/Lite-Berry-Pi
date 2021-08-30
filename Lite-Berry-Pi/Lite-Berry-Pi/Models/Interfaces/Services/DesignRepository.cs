@@ -84,9 +84,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             var design = await GetDesign(id);
 
             if (design == null)
-            {
-                throw new ArgumentNullException("The design is empty");
-            }
+                design = await GetDesign(2);
 
             string designCoords = design.DesignCoords;
 
@@ -101,6 +99,10 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
             t.Wait();
             // send a message to the hub
             await connection.InvokeAsync("SendLiteBerry", designCoords);
+            
+            await connection.StopAsync();
+            //close the connection
+            //t.Dispose();
         }
     }
 }

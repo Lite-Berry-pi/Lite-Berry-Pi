@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RaspberryPi
 {
@@ -11,17 +12,32 @@ namespace RaspberryPi
   {
     public GpioController Controller { get; set; }
     public Lights Lights { get; set; }
-
     private int[] PinsUsedRows { get; set; }
     private int[] PinsUsedColumns { get; set; }
     private int TimeInterval { get; set; }
-    public RaspPi(Lights lights, GpioController controller)
+    public RaspPi()
     {
-      Lights = lights;
-      Controller = controller;
+      Lights = new Lights();
+      Controller = new GpioController();
+      SetPinColAndRows();
+      TimeInterval = 5000;
+      ClosePins();
+    }
+    public RaspPi(int timeInterval)
+    {
+      Lights = new Lights();
+      Controller = new GpioController();
+      SetPinColAndRows();
+      TimeInterval = timeInterval;
+      ClosePins();
+    }
+    /// <summary>
+    /// Sets the Columns and Rows for the LED matrix.
+    /// </summary>
+    private void SetPinColAndRows()
+    {
       PinsUsedRows = new int[] { 5, 6, 13, 19, 26 };
       PinsUsedColumns = new int[] { 7, 12, 16, 20, 21 };
-      TimeInterval = 5000;
     }
     /// <summary>
     /// Set's the private integer TimeInterval for LED display
@@ -155,57 +171,7 @@ namespace RaspberryPi
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    public bool Start(string url)
-    {
-      Console.WriteLine("Running Start");
-      try
-      {
-        Console.WriteLine("Gonna Try");
-
-        Console.WriteLine($"URL: {url}");
-        HubConnection connection = new HubConnectionBuilder()
-          .WithUrl(url)
-          .WithAutomaticReconnect()
-          .Build();
-        connection.On<string>("TurnLightsOn", (message) => OnReceiveMessage(message));
-
-        var t = connection.StartAsync();
-        Console.WriteLine("Waiting");
-        t.Wait();
-        Console.WriteLine("StartAsync: " + connection.ConnectionId);
-        Console.WriteLine($"Connected ... ID: {connection.ConnectionId}");
-        return true;
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine("Never Connected");
-        Console.WriteLine(e.Message);
-        Console.WriteLine(e.InnerException);
-        return false;
-      }
-    }
-    /// <summary>
-    /// When message is recieved from the server, it converts the message and 
-    /// invokes the DisplayLights Method.
-    /// </summary>
-    /// <param name="message"></param>
-    private void OnReceiveMessage(string message)
-    {
-      Console.WriteLine($"Message Received: {message}");
-      List<LED> displayMessage = Lights.CreateLightPattern(message);
-      if (displayMessage.Count == 0)
-      {
-        Console.WriteLine("SquareBurst Initiated");
-        SquareBurst();
-      }
-      else
-      {
-        Console.WriteLine("List of Lights Scanned");
-        foreach (LED led in displayMessage) { Console.Write($"{led.ID}, "); }
-        Console.WriteLine();
-        DisplayLights(displayMessage);
-      }
-    }
+    
     public void SquareBurst()
     {
       int ogTimeInterval = TimeInterval;
