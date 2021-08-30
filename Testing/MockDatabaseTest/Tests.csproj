@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LiteBerryPi\RaspberryPi.csproj" />
-    <ProjectReference Include="..\Lite-Berry-Pi\Lite-Berry-Pi.csproj" />
+    <ProjectReference Include="..\..\LiteBerryPiAPI\LiteBerryPiAPI.csproj" />
+    <ProjectReference Include="..\..\RaspberryPi\RaspberryPi.csproj" />
   </ItemGroup>
 
 </Project>

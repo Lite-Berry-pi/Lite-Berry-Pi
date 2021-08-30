@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace LiteBerryPi
@@ -57,6 +58,7 @@ namespace LiteBerryPi
       if (!noRaspGPIO)
       {
         RaspPi raspi = new RaspPi(displayTime);
+        Console.WriteLine("No Design Patterns Loaded");
         Designs designs = new Designs();
         if (dispTestPattern != "") DisplayPattern(dispTestPattern, designs, raspi);
       }
@@ -67,6 +69,20 @@ namespace LiteBerryPi
         client.Start().Wait();
         Console.WriteLine("Successfully Connected");
         Console.WriteLine("Press CTRL + C to quit");
+        double timeStamp = 0;
+          Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        while (client.ConnectStatus() == "Connected")
+        {
+          if (stopwatch.ElapsedMilliseconds > timeStamp)
+          {
+            timeStamp = stopwatch.ElapsedMilliseconds + 10000;
+            Console.WriteLine($"Connect Status: {client.ConnectStatus()} Time Connected: {stopwatch.ElapsedMilliseconds / 1000} seconds");
+
+          }
+        }
+        stopwatch.Stop();
+        Console.WriteLine("Total Connected Time: " + stopwatch.ElapsedMilliseconds);
       }
     }
     public static void DisplayPattern( string pattern, Designs designs, RaspPi raspi)

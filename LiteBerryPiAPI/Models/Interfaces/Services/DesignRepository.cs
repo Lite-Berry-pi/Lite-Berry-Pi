@@ -108,7 +108,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
         public async Task TestConnection()
     {
       HubConnection connection = new HubConnectionBuilder()
-              .WithUrl("https://liteberrypiserver20210830085244.azurewebsites.net/raspi")
+              .WithUrl("https://liteberrypisignalrserver.azurewebsites.net/raspi")
               .WithAutomaticReconnect()
               .Build();
 
