@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
+using System.Threading.Tasks;
 
 namespace LiteBerryPi
 {
@@ -9,100 +10,84 @@ namespace LiteBerryPi
   {
     static void Main(string[] args)
     {
-      bool isTest = false;
+      bool noSignalR = false;
+      bool noRaspGPIO = false;
+      string signalURL = "http://liteberrypi.service.signalr.net";
+      string dispTestPattern = "";
+      int displayTime = 5000;
+
+
       // Initial Raspberry Pi GPIO and Light Grid setup
-      GpioController controller = new GpioController();
-      Lights light = new Lights();
-      RaspPi raspi = new RaspPi(light, controller);
-      raspi.ClosePins();
-      //Pre-Set LED Displays
-      List<LED> makeJ = new List<LED>() {
-        raspi.Lights.L3,
-        raspi.Lights.L3,
-        raspi.Lights.L8,
-        raspi.Lights.L13,
-        raspi.Lights.L16,
-        raspi.Lights.L18,
-        raspi.Lights.L21,
-        raspi.Lights.L22,
-        raspi.Lights.L23
-      };
-      List<LED> makeM = new List<LED>()
-        {
-          raspi.Lights.L1,
-          raspi.Lights.L5,
-          raspi.Lights.L6,
-          raspi.Lights.L7,
-          raspi.Lights.L9,
-          raspi.Lights.L10,
-          raspi.Lights.L11,
-          raspi.Lights.L13,
-          raspi.Lights.L15,
-          raspi.Lights.L16,
-          raspi.Lights.L20,
-          raspi.Lights.L21,
-          raspi.Lights.L25
-        };
-      List<LED> makeDiamond = new List<LED>()
-        {
-          light.L3, light.L7, light.L9, light.L11, light.L15, light.L17, light.L19, light.L23
-        };
-      //Handling CLI args
-      if (args.Length != 0)
+      if (args.Length > 0)
       {
-        switch (args[0])
+        Console.WriteLine($"argsLength:{ args.Length}");
+        //handles args 
+        foreach (string s in args)
         {
-          case "disp":
-            switch (args[1])
-            {
-              case "J":
-                raspi.DisplayLights(makeJ);
-                break;
-              case "M":
-                raspi.DisplayLights(makeM);
-                break;
-              case "diamond":
-                raspi.DisplayLights(makeDiamond);
-                break;
-              default:
-                Console.WriteLine("No Args match a saved pattern");
-                break;
-            }
-            break;
-          case "disptime":
-            try
-            {
-              raspi.SetDisplayTime(int.Parse(args[1]));
-            }
-            catch
-            {
-              Console.WriteLine("Invalid time entered (miliseconds)");
-            }
-            break;
-          case "disptest":
-            raspi.ReadAllLights();
-            isTest = true;
-            break;
-          case "squareburst":
-            raspi.SquareBurst();
-            isTest = true;
-            break;
-        }
-        Console.WriteLine("DisplayTime before exit" + raspi.GetDisplayTime());
-      }
-      if (!isTest)
-      {
-        bool startSuccess = raspi.Start("https://liteberrypiserver.azurewebsites.net/raspberrypi");
-        if (startSuccess)
-        {
-          raspi.ReadAllLights();
-          Console.WriteLine("Press CTRL + C to quit");
-          while (true)
+          string[] pm = s.Split('=');
+          int lenPm = pm.Length;
+          Console.WriteLine($"args: {s}");
+
+          switch (pm[0].ToLower())
           {
+            case "url":
+              if (pm.Length >= 2) { signalURL = pm[1]; }
+              else { Console.WriteLine("No URL Given. (eg URL:http://example.com)"); }
+              break;
+            case "norasp":
+              noRaspGPIO = true;
+              break;
+            case "disp":
+              if (pm.Length >= 2) { dispTestPattern = pm[1]; }
+              else { Console.WriteLine("No Pattern selected."); }
+              noSignalR = true;
+              break;
+            case "disptest":
+              dispTestPattern = pm[0];
+              noSignalR = true;
+              Console.WriteLine("Running Light Runner Test");
+              break;
+            case "disptime":
+              Int32.TryParse(pm[1], out displayTime);
+              break;
           }
+
         }
-        else { Console.WriteLine("Lite-Berry Pi cannot Start."); }
       }
+      if (!noRaspGPIO)
+      {
+        RaspPi raspi = new RaspPi(displayTime);
+        Designs designs = new Designs();
+        if (dispTestPattern != "") DisplayPattern(dispTestPattern, designs, raspi);
+      }
+      if (!noSignalR)
+      {
+        SignalRClient client = new SignalRClient(signalURL);
+        Console.WriteLine("Starting SignalR Client");
+        client.Start().Wait();
+        Console.WriteLine("Successfully Connected");
+        Console.WriteLine("Press CTRL + C to quit");
+      }
+    }
+    public static void DisplayPattern( string pattern, Designs designs, RaspPi raspi)
+    {
+      List<LED> desiredPattern = designs.Pattern[pattern];
+      if (pattern == "disptest")
+      {
+        raspi.ReadAllLights();
+      }
+      else if (desiredPattern != null)
+      {
+      raspi.DisplayLights(desiredPattern);      
+      }
+      
+      else
+      {
+        Console.WriteLine("No Patterns match desired input");
+      }
+      
+      
+      
     }
   }
 }
