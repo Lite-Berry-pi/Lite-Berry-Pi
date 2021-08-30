@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Lite_Berry_Pi.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;

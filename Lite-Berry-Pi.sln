@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LiteBerryPiAPI", "LiteBerry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaspberryPi", "RaspberryPi\RaspberryPi.csproj", "{69A67179-632D-4917-ADCA-9FC0D2F25FD2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Testing\MockDatabaseTest\Tests.csproj", "{6771CAF9-DAEA-427F-8607-F0F9A50D32EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{69A67179-632D-4917-ADCA-9FC0D2F25FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69A67179-632D-4917-ADCA-9FC0D2F25FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A67179-632D-4917-ADCA-9FC0D2F25FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6771CAF9-DAEA-427F-8607-F0F9A50D32EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6771CAF9-DAEA-427F-8607-F0F9A50D32EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6771CAF9-DAEA-427F-8607-F0F9A50D32EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6771CAF9-DAEA-427F-8607-F0F9A50D32EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
