@@ -75,7 +75,7 @@ namespace RaspberryPi
       {
         throw new System.Exception("Input string does no match the elements in Light List");
       }
-      
+
 
       List<LED> newList = new List<LED>();
 

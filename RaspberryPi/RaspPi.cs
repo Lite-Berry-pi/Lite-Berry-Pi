@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RaspberryPi
 {
@@ -22,7 +20,7 @@ namespace RaspberryPi
       Console.WriteLine("setGPIO:" + noRasp);
       if (!noRasp)
       {
-      Lights = new Lights();
+        Lights = new Lights();
         Controller = new GpioController();
         SetPinColAndRows();
         TimeInterval = 5000;
@@ -165,7 +163,7 @@ namespace RaspberryPi
       Console.WriteLine("Starting Display Lights");
       ClosePins();
       OpenPins();
-      
+
       long counter = stopW.ElapsedMilliseconds;
 
       while (stopW.ElapsedMilliseconds <= counter + timeInterval)
@@ -190,22 +188,23 @@ namespace RaspberryPi
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    
+
     public void AnimationDisplay(string animKey)
     {
       List<List<LED>> animationReel = _designs.AnimPattern[animKey];
-      if (animationReel == null) {
+      if (animationReel == null)
+      {
         Console.WriteLine("No Animation found that matches supplied key");
         return;
       }
       else
       {
-        foreach(List<LED> listLED in animationReel)
-        { 
-            DisplayLights(listLED, AnimationInterval);          
+        foreach (List<LED> listLED in animationReel)
+        {
+          DisplayLights(listLED, AnimationInterval);
         }
-      }      
+      }
     }
-    
+
   }
 }

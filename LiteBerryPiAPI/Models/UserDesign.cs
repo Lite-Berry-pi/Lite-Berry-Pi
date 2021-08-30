@@ -1,21 +1,15 @@
-﻿using Lite_Berry_Pi.Models.Api;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Lite_Berry_Pi.Models
+﻿namespace Lite_Berry_Pi.Models
 {
-    public class UserDesign
-    {
-       public int UserId { get; set; }
-        
-        public int DesignId { get; set; }
+  public class UserDesign
+  {
+    public int UserId { get; set; }
 
-        //navigation aids
+    public int DesignId { get; set; }
 
-        public User User { get; set; }
+    //navigation aids
 
-        public Design Designs { get; set; }
-    }
+    public User User { get; set; }
+
+    public Design Designs { get; set; }
+  }
 }

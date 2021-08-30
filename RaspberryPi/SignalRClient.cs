@@ -6,10 +6,11 @@ namespace RaspberryPi
 {
   public class SignalRClient
   {
-    private string _url;    
+    private string _url;
     private HubConnection Connection { get; set; }
-    
-    public SignalRClient(string url){
+
+    public SignalRClient(string url)
+    {
       _url = url;
       Connection = new HubConnectionBuilder()
           .WithUrl(url)
@@ -21,9 +22,9 @@ namespace RaspberryPi
     {
       Console.WriteLine("Running Start");
       try
-      {        
+      {
         Console.WriteLine($"URL: {_url}");
-        
+
 
         await Connection.StartAsync();
         Console.WriteLine("Waiting");
@@ -32,13 +33,13 @@ namespace RaspberryPi
         Console.WriteLine("StartAsync: " + Connection.ConnectionId);
         Console.WriteLine($"Connected ... ID: {Connection.ConnectionId}");
         //When recieved the TurnLights on.  (fromHubMethodCall, Callback to run clientmethod
-        Connection.On<string>("TurnLightsOn", (message) => OnReceiveMessage(message));        
+        Connection.On<string>("TurnLightsOn", (message) => OnReceiveMessage(message));
       }
       catch (Exception e)
       {
         Console.WriteLine("Error Connecting");
         Console.WriteLine(e.Message);
-        Console.WriteLine(e.InnerException);        
+        Console.WriteLine(e.InnerException);
       }
     }
     /// <summary>
@@ -56,7 +57,7 @@ namespace RaspberryPi
     /// <param name="message"></param>
     private void OnReceiveMessage(string message)
     {
-      Console.WriteLine($"Message Received: {message}");      
+      Console.WriteLine($"Message Received: {message}");
     }
   }
 }
