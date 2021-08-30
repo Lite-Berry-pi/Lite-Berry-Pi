@@ -13,8 +13,9 @@ namespace LiteBerryPi
     {
       bool noSignalR = false;
       bool noRaspGPIO = false;
-      string signalURL = "http://liteberrypi.service.signalr.net";
+      string signalURL = "https://liteberrypisignalrserver.azurewebsites.net/raspi";
       string dispTestPattern = "";
+      string animationTestPattern = "";
       int displayTime = 5000;
 
 
@@ -51,23 +52,29 @@ namespace LiteBerryPi
             case "disptime":
               Int32.TryParse(pm[1], out displayTime);
               break;
+            case "animationtest":
+              if (pm.Length >= 2) { animationTestPattern = pm[1]; }
+              else { Console.WriteLine("Invalid Test Animation Parameter"); }
+              noSignalR = true;
+              break;
           }
 
         }
       }
-      if (!noRaspGPIO)
-      {
-        RaspPi raspi = new RaspPi(displayTime);
-        Console.WriteLine("No Design Patterns Loaded");
+      
         Designs designs = new Designs();
-        if (dispTestPattern != "") DisplayPattern(dispTestPattern, designs, raspi);
-      }
+        RaspPi raspi = new RaspPi(displayTime, designs, noRaspGPIO);
+        Console.WriteLine("No Design Patterns Loaded");
+        if (dispTestPattern != "" && !noRaspGPIO) DisplayPattern(dispTestPattern, designs, raspi);
+      if (animationTestPattern != "" && !noRaspGPIO) raspi.AnimationDisplay(animationTestPattern);
+      
       if (!noSignalR)
       {
         SignalRClient client = new SignalRClient(signalURL);
         Console.WriteLine("Starting SignalR Client");
         client.Start().Wait();
         Console.WriteLine("Successfully Connected");
+        if (client.ConnectStatus() == "Connected" && noRaspGPIO == false) raspi.ReadAllLights(); 
         Console.WriteLine("Press CTRL + C to quit");
         double timeStamp = 0;
           Stopwatch stopwatch = new Stopwatch();
