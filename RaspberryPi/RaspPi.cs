@@ -12,24 +12,37 @@ namespace RaspberryPi
   {
     public GpioController Controller { get; set; }
     public Lights Lights { get; set; }
+    private Designs _designs { get; set; }
     private int[] PinsUsedRows { get; set; }
     private int[] PinsUsedColumns { get; set; }
     private int TimeInterval { get; set; }
-    public RaspPi()
+    public int AnimationInterval { get; set; }
+    public RaspPi(bool noRasp = false)
     {
+      Console.WriteLine("setGPIO:" + noRasp);
+      if (!noRasp)
+      {
       Lights = new Lights();
-      Controller = new GpioController();
-      SetPinColAndRows();
-      TimeInterval = 5000;
-      ClosePins();
+        Controller = new GpioController();
+        SetPinColAndRows();
+        TimeInterval = 5000;
+        AnimationInterval = 500;
+        ClosePins();
+      }
     }
-    public RaspPi(int timeInterval)
+    public RaspPi(int timeInterval, Designs designs, bool noRasp = false)
     {
-      Lights = new Lights();
-      Controller = new GpioController();
-      SetPinColAndRows();
-      TimeInterval = timeInterval;
-      ClosePins();
+      Console.WriteLine("setGPIO:" + noRasp);
+      if (!noRasp)
+      {
+        _designs = designs;
+        Lights = new Lights();
+        Controller = new GpioController();
+        SetPinColAndRows();
+        TimeInterval = timeInterval;
+        AnimationInterval = 500;
+        ClosePins();
+      }
     }
     /// <summary>
     /// Sets the Columns and Rows for the LED matrix.
@@ -47,6 +60,10 @@ namespace RaspberryPi
     public void SetDisplayTime(int time = 5000)
     {
       TimeInterval = time;
+    }
+    public void SetAnimationInterval(int time)
+    {
+      AnimationInterval = time;
     }
     /// <summary>
     /// Returns the Value of the TimeInterval
@@ -139,8 +156,10 @@ namespace RaspberryPi
     /// </summary>
     /// <param name="list"></param>
 
-    public void DisplayLights(List<LED> list)
+    public void DisplayLights(List<LED> list, double timeInterval = 0)
     {
+      if (timeInterval == 0) timeInterval = TimeInterval;
+      Console.WriteLine("Animation Time Interval: " + timeInterval);
       Stopwatch stopW = new Stopwatch();
       stopW.Start();
       Console.WriteLine("Starting Display Lights");
@@ -149,7 +168,7 @@ namespace RaspberryPi
       
       long counter = stopW.ElapsedMilliseconds;
 
-      while (stopW.ElapsedMilliseconds <= counter + TimeInterval)
+      while (stopW.ElapsedMilliseconds <= counter + timeInterval)
       {
 
         foreach (LED led in list)
@@ -172,29 +191,20 @@ namespace RaspberryPi
     /// <param name="url"></param>
     /// <returns></returns>
     
-    public void SquareBurst()
+    public void AnimationDisplay(string animKey)
     {
-      int ogTimeInterval = TimeInterval;
-      TimeInterval = 500;
-      List<LED> stepOne = new List<LED>() { Lights.L13 };
-      List<LED> stepTwo = new List<LED>() { Lights.L8, Lights.L12, Lights.L14, Lights.L18 };
-      List<LED> stepThree = new List<LED>() { Lights.L3, Lights.L7, Lights.L9, Lights.L11, Lights.L15, Lights.L17, Lights.L19, Lights.L23 };
-      List<LED> stepFour = new List<LED>() { Lights.L2, Lights.L4, Lights.L6, Lights.L10, Lights.L16, Lights.L22, Lights.L24, Lights.L20 };
-      List<LED> stepFive = new List<LED>() { Lights.L1, Lights.L5, Lights.L21, Lights.L25};
-      DisplayLights(stepOne);
-      DisplayLights(stepTwo);
-      DisplayLights(stepThree);
-      DisplayLights(stepFour);
-      DisplayLights(stepFive);
-            
-      DisplayLights(stepFive);
-      DisplayLights(stepFour);
-      DisplayLights(stepThree);
-      DisplayLights(stepTwo);
-      DisplayLights(stepOne);
-
-      TimeInterval = ogTimeInterval;
-
+      List<List<LED>> animationReel = _designs.AnimPattern[animKey];
+      if (animationReel == null) {
+        Console.WriteLine("No Animation found that matches supplied key");
+        return;
+      }
+      else
+      {
+        foreach(List<LED> listLED in animationReel)
+        { 
+            DisplayLights(listLED, AnimationInterval);          
+        }
+      }      
     }
     
   }
