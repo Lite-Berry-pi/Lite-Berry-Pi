@@ -69,7 +69,8 @@ namespace Lite_Berry_Pi.Controllers
       await _design.CreateDesign(incomingData);
       return CreatedAtAction("GetDesign", new { id = incomingData.Id }, incomingData);
     }
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
+    [AllowAnonymous]
     // DELETE: api/Designs/5
     [HttpDelete("{id}")]
     public async Task<ActionResult<Design>> DeleteDesign(int id)
