@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RaspberryPi
 {
@@ -71,13 +72,14 @@ namespace RaspberryPi
     /// <returns></returns>
     public List<LED> CreateLightPattern(string inString)
     {
-      if (AllLights.Count != inString.Length)
-      {
-        throw new System.Exception("Input string does no match the elements in Light List");
-      }
-
-
       List<LED> newList = new List<LED>();
+      //if (AllLights.Count != inString.Length)
+      //{
+      //  Console.WriteLine("Input String does not match Parameters");
+      //  return newList;
+      //  //throw new System.Exception("Input string does no match the elements in Light List");
+      //}
+
 
       for (int i = 0; i < inString.Length; i++)
       {

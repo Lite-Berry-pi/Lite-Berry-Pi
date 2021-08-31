@@ -13,10 +13,16 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
   public class DesignRepository : IDesign
   {
     private LiteBerryDbContext _context;
-
+    private HubConnection _serverHub;
+    private string _url;
     public DesignRepository(LiteBerryDbContext context)
     {
+      _url = "https://liteberrypisignalrserver.azurewebsites.net/raspi";
       _context = context;
+      _serverHub = new HubConnectionBuilder()
+              .WithUrl(_url)
+              .WithAutomaticReconnect()
+              .Build();
     }
 
     public async Task<Design> CreateDesign(DesignDto incomingData)
@@ -75,7 +81,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
       Design design = await _context.Design.FirstOrDefaultAsync(x => x.Id == id);
       design.Title = incomingData.Title;
       design.DesignCoords = incomingData.DesignCoords;
-      _context.Entry(design).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+      _context.Entry(design).State = EntityState.Modified;
       await _context.SaveChangesAsync();
       return design;
     }
@@ -84,44 +90,35 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
     {
       var design = await GetDesign(id);
 
-      if (design == null)
-        design = await GetDesign(2);
-
+      if (design == null) design = await GetDesign(2);
       string designCoords = design.DesignCoords;
-
-      var url = "https://liteberrypiserver.azurewebsites.net/raspberrypi";
-
-      HubConnection connection = new HubConnectionBuilder()
-        .WithUrl(url)
-        .WithAutomaticReconnect()
-        .Build();
-
-      var t = connection.StartAsync();
+      var t = _serverHub.StartAsync();
       t.Wait();
       // send a message to the hub
-      await connection.InvokeAsync("SendLiteBerry", designCoords);
-
-      await connection.StopAsync();
-      //close the connection
-      //t.Dispose();
+      await _serverHub.InvokeAsync("SendLiteBerry", designCoords);
+      await _serverHub.StopAsync();      
     }
     public async Task TestConnection()
     {
-      HubConnection connection = new HubConnectionBuilder()
-              .WithUrl("https://liteberrypisignalrserver.azurewebsites.net/raspi")
-              .WithAutomaticReconnect()
-              .Build();
+      
 
-      var t = connection.StartAsync();
+      var t = _serverHub.StartAsync();
       t.Wait();
-      Debug.WriteLine($"T Status: {t.Status}");
+      Debug.WriteLine($"TestConnection Status: {t.Status}");
       // send a message to the hub
-      await connection.InvokeAsync("TestConnection", "TestFromClient");
+      await _serverHub.InvokeAsync("TestConnection", "TestFromClient");
 
-      await connection.StopAsync();
+      await _serverHub.StopAsync();
       //close the connection
-      //t.Dispose();
+      t.Dispose();
     }
-
+    public async Task DisplayStandardDesign (string key)
+    {      
+      var t =_serverHub.StartAsync();
+      t.Wait();
+      Debug.WriteLine("DisplayStandardDesign Connection: " + t.Status);
+      await _serverHub.InvokeAsync("DisplayStandardDesign", key);
+      await _serverHub.StopAsync();
+    }
   }
 }

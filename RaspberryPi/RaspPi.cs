@@ -149,7 +149,7 @@ namespace RaspberryPi
       ClosePins();
     }
     /// <summary>
-    /// Takes in a Lost of LED objects and will scan them for the desired
+    /// Takes in a list of LED objects and will scan them for the desired
     /// length of time.  Determined by TimeInterval Property
     /// </summary>
     /// <param name="list"></param>
@@ -170,8 +170,7 @@ namespace RaspberryPi
       {
 
         foreach (LED led in list)
-        {
-
+        {          
           Controller.Write(led.Column, PinValue.Low);
           Controller.Write(led.Row, PinValue.High);
           //Thread.Sleep(250);
@@ -191,6 +190,7 @@ namespace RaspberryPi
 
     public void AnimationDisplay(string animKey)
     {
+      Console.WriteLine($"AnimKey: {animKey}");
       List<List<LED>> animationReel = _designs.AnimPattern[animKey];
       if (animationReel == null)
       {
@@ -206,5 +206,12 @@ namespace RaspberryPi
       }
     }
 
+  public void DisplayPattern(string patternKey)
+  {
+      List<LED> pattern = _designs.Pattern[patternKey];
+      if (patternKey == "disptest") ReadAllLights();
+      else if (pattern != null) DisplayLights(pattern);
+      else { Console.WriteLine("No Pattern Matched Input"); }
+  }
   }
 }

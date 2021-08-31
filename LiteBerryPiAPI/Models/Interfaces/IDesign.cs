@@ -13,5 +13,6 @@ namespace Lite_Berry_Pi.Models.Interfaces
     Task DeleteDesign(int id);
     Task TestConnection();
     Task GetDesignToSend(int id);
+    Task DisplayStandardDesign(string key);
   }
 }

@@ -63,12 +63,12 @@ namespace LiteBerryPi
       Designs designs = new Designs();
       RaspPi raspi = new RaspPi(displayTime, designs, noRaspGPIO);
       Console.WriteLine("No Design Patterns Loaded");
-      if (dispTestPattern != "" && !noRaspGPIO) DisplayPattern(dispTestPattern, designs, raspi);
+      if (dispTestPattern != "" && !noRaspGPIO) raspi.DisplayPattern(dispTestPattern);
       if (animationTestPattern != "" && !noRaspGPIO) raspi.AnimationDisplay(animationTestPattern);
 
       if (!noSignalR)
       {
-        SignalRClient client = new SignalRClient(signalURL);
+        SignalRClient client = new SignalRClient(signalURL, raspi);
         Console.WriteLine("Starting SignalR Client");
         client.Start().Wait();
         Console.WriteLine("Successfully Connected");
@@ -79,36 +79,21 @@ namespace LiteBerryPi
         stopwatch.Start();
         while (client.ConnectStatus() == "Connected")
         {
+          if (Console.ReadKey().Key == ConsoleKey.Q) client.Stop().Wait();
+          if (Console.ReadKey().Key == ConsoleKey.T) raspi.ReadAllLights(3);
           if (stopwatch.ElapsedMilliseconds > timeStamp)
           {
             timeStamp = stopwatch.ElapsedMilliseconds + 10000;
             Console.WriteLine($"Connect Status: {client.ConnectStatus()} Time Connected: {stopwatch.ElapsedMilliseconds / 1000} seconds");
-
           }
         }
         stopwatch.Stop();
+        Console.WriteLine("Disconnecting from Server");
+        
         Console.WriteLine("Total Connected Time: " + stopwatch.ElapsedMilliseconds);
+        Console.WriteLine("Have a Great Day!");
       }
     }
-    public static void DisplayPattern(string pattern, Designs designs, RaspPi raspi)
-    {
-      List<LED> desiredPattern = designs.Pattern[pattern];
-      if (pattern == "disptest")
-      {
-        raspi.ReadAllLights();
-      }
-      else if (desiredPattern != null)
-      {
-        raspi.DisplayLights(desiredPattern);
-      }
-
-      else
-      {
-        Console.WriteLine("No Patterns match desired input");
-      }
-
-
-
-    }
+   
   }
 }

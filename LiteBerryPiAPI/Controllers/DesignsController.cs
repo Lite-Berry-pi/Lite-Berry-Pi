@@ -3,6 +3,7 @@ using Lite_Berry_Pi.Models.Api;
 using Lite_Berry_Pi.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -94,6 +95,24 @@ namespace Lite_Berry_Pi.Controllers
       await _design.TestConnection();
       Debug.WriteLine("Test Connection complete");
       return NoContent();
+    }
+    [AllowAnonymous]
+    //GET: api/Designs/stdpattern/squareburst/animation
+    [HttpGet("stddesign/{name}/{type}")]
+    public async Task<IActionResult> StandardDesign(string name, string type)
+    {
+      try
+      {
+        string key = $"{type}:{name}";
+        Debug.WriteLine("Key:" + key);
+        await _design.DisplayStandardDesign(key);
+        Debug.WriteLine("Sent Standard Design:" + key);
+        return Ok("Design Sent");
+      }
+      catch(Exception err)
+      {
+        return BadRequest(err);
+      }
     }
   }
 }

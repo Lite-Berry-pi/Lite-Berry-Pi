@@ -19,5 +19,10 @@ namespace LiteBerryPiServer
     {
       await Clients.All.SendAsync("TestClientConnection", msg);
     }
+    public async Task DisplayStandardDesign(string key)
+    {
+      await Clients.All.SendAsync("DisplayStandardDesign", key);
+    }
+
   }
 }

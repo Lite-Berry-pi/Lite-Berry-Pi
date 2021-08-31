@@ -59,7 +59,7 @@ namespace RaspberryPi
             LightMatrix.L23
       });
       //Animations      
-      AnimPattern.Add("squareburst",
+      AnimPattern.Add("SQUAREBURST",
         new List<List<LED>>
         {
           new List<LED>() { LightMatrix.L13 },
@@ -69,7 +69,7 @@ namespace RaspberryPi
           new List<LED>() { LightMatrix.L1, LightMatrix.L5, LightMatrix.L21, LightMatrix.L25 },
         }
         );
-      AnimPattern.Add("firewheel", new List<List<LED>>
+      AnimPattern.Add("FIREWHEEL", new List<List<LED>>
       {
         new List<LED>() {LightMatrix.L3, LightMatrix.L8, LightMatrix.L13, LightMatrix.L18, LightMatrix.L23 },
         new List<LED>() {LightMatrix.L5, LightMatrix.L9, LightMatrix.L13, LightMatrix.L17, LightMatrix.L20 },
