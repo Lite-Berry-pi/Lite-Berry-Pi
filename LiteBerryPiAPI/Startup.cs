@@ -54,7 +54,9 @@ namespace Lite_Berry_Pi
 
       services.AddDbContext<LiteBerryDbContext>(options =>
      {
-       string connectionString = Configuration.GetConnectionString("DefaultConnection");
+       //Appsetting.json entry
+       //string connectionString = Configuration.GetConnectionString("DefaultConnection");
+       string connectionString = Configuration.GetConnectionString("ProductionConnection");
        options.UseSqlServer(connectionString);
      });
 
