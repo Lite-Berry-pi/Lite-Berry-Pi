@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
+import Designs from '../components/MainPage/Designs';
 
 
-export class Home extends Component {
-    static displayName = Home.name;
-
-
-  render () {
+const Home  = () => {
     return (
         <>
+            <Designs />
             <Button>Hello World!</Button>
-      </>
+        </>
     );
-  }
-}
-
+    }
+export default Home;
