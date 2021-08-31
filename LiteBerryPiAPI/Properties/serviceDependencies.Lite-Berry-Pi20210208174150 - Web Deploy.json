@@ -1,17 +1,5 @@
 {
   "dependencies": {
-    "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/schooldemodbserver/databases/Lite-Berry-Pi_db",
-      "type": "mssql.azure",
-      "connectionId": "DefaultConnection",
-      "secretStore": "AzureAppSettings"
-    },
-    "mssql2": {
-      "type": "mssql",
-      "connectionId": "DefaultConnectionLive",
-      "suggestion": "true",
-      "ignored": "true"
-    },
     "signalr1": {
       "type": "signalr",
       "connectionId": "",

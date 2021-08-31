@@ -123,7 +123,7 @@ namespace Lite_Berry_Pi
       app.UseSwaggerUI(options =>
      {
        options.SwaggerEndpoint("/api/v1/swagger.json", "LiteBerry");
-       options.RoutePrefix = "";
+       options.RoutePrefix = string.Empty;
      });
 
       app.UseEndpoints(endpoints =>
