@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RaspberryPi
 {
   public class Designs
   {
     public Dictionary<string, List<LED>> Pattern { get; set; }
-    public Dictionary<string, List<List<LED>>> AnimPattern { get; set; }    
+    public Dictionary<string, List<List<LED>>> AnimPattern { get; set; }
     private Lights LightMatrix { get; set; }
     public Designs()
-    {      
+    {
       Pattern = new Dictionary<string, List<LED>>();
       AnimPattern = new Dictionary<string, List<List<LED>>>();
       LightMatrix = new Lights();
@@ -60,7 +59,7 @@ namespace RaspberryPi
             LightMatrix.L23
       });
       //Animations      
-      AnimPattern.Add("squareburst", 
+      AnimPattern.Add("SQUAREBURST",
         new List<List<LED>>
         {
           new List<LED>() { LightMatrix.L13 },
@@ -70,7 +69,7 @@ namespace RaspberryPi
           new List<LED>() { LightMatrix.L1, LightMatrix.L5, LightMatrix.L21, LightMatrix.L25 },
         }
         );
-      AnimPattern.Add("firewheel", new List<List<LED>>
+      AnimPattern.Add("FIREWHEEL", new List<List<LED>>
       {
         new List<LED>() {LightMatrix.L3, LightMatrix.L8, LightMatrix.L13, LightMatrix.L18, LightMatrix.L23 },
         new List<LED>() {LightMatrix.L5, LightMatrix.L9, LightMatrix.L13, LightMatrix.L17, LightMatrix.L20 },
@@ -78,6 +77,6 @@ namespace RaspberryPi
         new List<LED>() {LightMatrix.L1, LightMatrix.L7, LightMatrix.L13, LightMatrix.L14, LightMatrix.L20 },
       });
 
-    } 
+    }
   }
 }

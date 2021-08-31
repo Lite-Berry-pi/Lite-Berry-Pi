@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Lite_Berry_Pi.Models.Api
+﻿namespace Lite_Berry_Pi.Models.Api
 {
-    public class DesignDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string DesignCoords { get; set; }
-    }
+  public class DesignDto
+  {
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string DesignCoords { get; set; }
+  }
 }

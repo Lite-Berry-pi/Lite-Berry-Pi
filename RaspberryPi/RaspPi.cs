@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RaspberryPi
 {
@@ -22,7 +20,7 @@ namespace RaspberryPi
       Console.WriteLine("setGPIO:" + noRasp);
       if (!noRasp)
       {
-      Lights = new Lights();
+        Lights = new Lights();
         Controller = new GpioController();
         SetPinColAndRows();
         TimeInterval = 5000;
@@ -151,7 +149,7 @@ namespace RaspberryPi
       ClosePins();
     }
     /// <summary>
-    /// Takes in a Lost of LED objects and will scan them for the desired
+    /// Takes in a list of LED objects and will scan them for the desired
     /// length of time.  Determined by TimeInterval Property
     /// </summary>
     /// <param name="list"></param>
@@ -165,15 +163,14 @@ namespace RaspberryPi
       Console.WriteLine("Starting Display Lights");
       ClosePins();
       OpenPins();
-      
+
       long counter = stopW.ElapsedMilliseconds;
 
       while (stopW.ElapsedMilliseconds <= counter + timeInterval)
       {
 
         foreach (LED led in list)
-        {
-
+        {          
           Controller.Write(led.Column, PinValue.Low);
           Controller.Write(led.Row, PinValue.High);
           //Thread.Sleep(250);
@@ -190,22 +187,31 @@ namespace RaspberryPi
     /// </summary>
     /// <param name="url"></param>
     /// <returns></returns>
-    
+
     public void AnimationDisplay(string animKey)
     {
+      Console.WriteLine($"AnimKey: {animKey}");
       List<List<LED>> animationReel = _designs.AnimPattern[animKey];
-      if (animationReel == null) {
+      if (animationReel == null)
+      {
         Console.WriteLine("No Animation found that matches supplied key");
         return;
       }
       else
       {
-        foreach(List<LED> listLED in animationReel)
-        { 
-            DisplayLights(listLED, AnimationInterval);          
+        foreach (List<LED> listLED in animationReel)
+        {
+          DisplayLights(listLED, AnimationInterval);
         }
-      }      
+      }
     }
-    
+
+  public void DisplayPattern(string patternKey)
+  {
+      List<LED> pattern = _designs.Pattern[patternKey];
+      if (patternKey == "disptest") ReadAllLights();
+      else if (pattern != null) DisplayLights(pattern);
+      else { Console.WriteLine("No Pattern Matched Input"); }
+  }
   }
 }
