@@ -43,7 +43,7 @@ namespace Tests
       var testDesign = await CreateAndSaveTestDesign();
       var repository = new DesignRepository(_db);
 
-      var resultUser = await repository.GetDesign(testDesign.Id);
+      var resultUser = await repository.GetDesignById(testDesign.Id);
 
       Assert.Equal("Test", resultUser.Title);
     }

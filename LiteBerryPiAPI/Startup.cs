@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +16,7 @@ using Microsoft.OpenApi.Models;
 namespace Lite_Berry_Pi
 {
   public class Startup
-  {
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-    bool addSwag = false;
+  {    
     public IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration)
@@ -28,8 +24,6 @@ namespace Lite_Berry_Pi
       Configuration = configuration;
 
     }
-
-
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -85,24 +79,16 @@ namespace Lite_Berry_Pi
       services.AddControllers().AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
       );
-      if (addSwag)
-      {
+      
         services.AddSwaggerGen(options =>
         {
           options.SwaggerDoc("v1", new OpenApiInfo()
           {
             Title = "LiteBerry",
-            Version = "v1",
+            Version = "v1.5",
           });
         });
-      }
-      else
-      {
-        services.AddSpaStaticFiles(configuration =>
-        {
-          configuration.RootPath = "ClientApp/build";
-        });
-      }
+      
     }
 
 
@@ -126,8 +112,7 @@ namespace Lite_Berry_Pi
 
       app.UseFileServer();
 
-      if (addSwag)
-      {
+      
         app.UseSwagger(options =>
        {
          options.RouteTemplate = "/api/{documentName}/swagger.json";
@@ -137,14 +122,7 @@ namespace Lite_Berry_Pi
        {
          options.SwaggerEndpoint("/api/v1/swagger.json", "LiteBerry");
          options.RoutePrefix = string.Empty;
-       });
-      }
-      else
-      {
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-        app.UseSpaStaticFiles();
-      }
+       });            
       app.UseEndpoints(endpoints =>
       {
         {
@@ -152,16 +130,7 @@ namespace Lite_Berry_Pi
                   name: "default",
                   pattern: "/api/{controller}/{action=Index}/{id?}");
         }
-      });
-      app.UseSpa(spa =>
-      {
-        spa.Options.SourcePath = "ClientApp";
-
-        if (env.IsDevelopment())
-        {
-          spa.UseReactDevelopmentServer(npmScript: "start");
-        }
-      });
+      });      
     }
   }
 }

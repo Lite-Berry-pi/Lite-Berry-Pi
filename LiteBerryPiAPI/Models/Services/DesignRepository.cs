@@ -42,7 +42,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
 
     public async Task DeleteDesign(int id)
     {
-      DesignDto designdto = await GetDesign(id);
+      DesignDto designdto = await GetDesignById(id);
       Design design = await _context.Design.FirstOrDefaultAsync(d => d.Id == designdto.Id);
       _context.Entry(design).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
       await _context.SaveChangesAsync();
@@ -61,7 +61,7 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
       return designs;
     }
 
-    public async Task<DesignDto> GetDesign(int id)
+    public async Task<DesignDto> GetDesignById(int id)
     {
       return await _context.Design
           .Where(design => design.Id == id)
@@ -73,8 +73,21 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
           })
           //TODO: Do we want to get the name of the user who created the design here?
           .FirstOrDefaultAsync();
-
     }
+    public async Task<DesignDto> GetDesignByTitle(string title)
+    {
+      return await _context.Design
+          .Where(design => design.Title == title)
+          .Select(design => new DesignDto
+          {
+            Id = design.Id,
+            Title = design.Title,
+            DesignCoords = design.DesignCoords
+          })
+          //TODO: Do we want to get the name of the user who created the design here?
+          .FirstOrDefaultAsync();
+    }
+
 
     public async Task<Design> UpdateDesign(int id, DesignDto incomingData)
     {
@@ -85,18 +98,33 @@ namespace Lite_Berry_Pi.Models.Interfaces.Services
       await _context.SaveChangesAsync();
       return design;
     }
-
-    public async Task GetDesignToSend(int id)
+    public async Task<bool> SendDesignByTitleSocket(string title)
     {
-      var design = await GetDesign(id);
+      var design = await GetDesignByTitle(title);
+      if (design == null) return false;
 
-      if (design == null) design = await GetDesign(2);
-      string designCoords = design.DesignCoords;
       var t = _serverHub.StartAsync();
       t.Wait();
+
       // send a message to the hub
-      await _serverHub.InvokeAsync("SendLiteBerry", designCoords);
-      await _serverHub.StopAsync();      
+      await _serverHub.InvokeAsync("SendLiteBerry", design.DesignCoords);
+      await _serverHub.StopAsync();
+      return true;
+    }
+
+
+    public async Task<bool> SendDesignByIdSocket(int id)
+    {
+      var design = await GetDesignById(id);
+      if (design == null) return false;
+      
+      var t = _serverHub.StartAsync();
+      t.Wait();
+
+      // send a message to the hub
+      await _serverHub.InvokeAsync("SendLiteBerry", design.DesignCoords);
+      await _serverHub.StopAsync();
+      return true;
     }
     public async Task TestConnection()
     {

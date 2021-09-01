@@ -22,24 +22,37 @@ namespace Lite_Berry_Pi.Controllers
     {
       _design = design;
     }
+    #region //standardCrud
     [AllowAnonymous]
-    // GET: api/Designs
-    [HttpGet]
+    // GET: api/Designs/getall
+    [HttpGet("/getall")]
+
     public async Task<ActionResult<IEnumerable<Design>>> GetDesigns()
     {
       return Ok(await _design.GetAllDesigns());
     }
     [AllowAnonymous]
-    // GET: api/Designs/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<DesignDto>> GetDesign(int id)
+    // GET: api/Designs/id/5
+    [HttpGet("/id/{id}")]
+    public async Task<ActionResult<DesignDto>> GetDesignById(int id)
     {
-      var design = await _design.GetDesign(id);
+      var design = await _design.GetDesignById(id);
 
       if (design == null)
       {
         return NotFound();
       }
+      return design;
+    }
+    [AllowAnonymous]
+    //GET: api/Designs/title
+    [HttpGet("/title/{title}")]
+    public async Task<ActionResult<DesignDto>> GetDesignByTitle(string title)
+    {
+      var design = await _design.GetDesignByTitle(title);
+
+      if (design == null) return NotFound();
+
       return design;
     }
     //[Authorize(Roles = "Administrator")]
@@ -78,24 +91,41 @@ namespace Lite_Berry_Pi.Controllers
       await _design.DeleteDesign(id);
       return NoContent();
     }
-
+#endregion 
     [AllowAnonymous]
-    // GET: api/Designs/GetDesigns/3
-    [HttpGet("getdesign/{id}")]
-    public async Task<ActionResult<Design>> GetDesignToSend(int id)
+    // GET: api/Designs/send_design_id/3
+    [HttpGet("send_design_id/{id}")]
+    //Socket Routes
+    public async Task<ActionResult<Design>> GetAndSendDesignById(int id)
     {
-      await _design.GetDesignToSend(id);
-      return Ok();
+      bool didSend = await _design.SendDesignByIdSocket(id);
+      return Ok(didSend);
+    }
+    [AllowAnonymous]
+    // GET: api/Designs/send_design_id/squareBurst
+    [HttpGet("send_design/{title}")]
+    public async Task<ActionResult<Design>> GetAndSendDesignByTitle(string title)
+    {
+      bool didSend = await _design.SendDesignByTitleSocket(title);
+      return Ok(didSend);
     }
     [AllowAnonymous]
     //GET: api/Designs/TestConnection
-    [HttpGet("testconnection")]
+    
+    [HttpGet("testconnection")]    
     public async Task<ActionResult> TestConnection()
     {
-      Debug.WriteLine($"Testing Connection");
-      await _design.TestConnection();
-      Debug.WriteLine("Test Connection complete");
-      return NoContent();
+      try
+      {
+        Debug.WriteLine($"Testing Connection");
+        await _design.TestConnection();
+        Debug.WriteLine("Test Connection complete");
+      return Ok("Connection Tested Complete");
+      }
+      catch (Exception err)
+      {
+        return BadRequest(err);
+      }
     }
     [AllowAnonymous]
     //GET: api/Designs/stdpattern/squareburst/animation
@@ -105,10 +135,9 @@ namespace Lite_Berry_Pi.Controllers
       try
       {
         string key = $"{type}:{name}";
-        Debug.WriteLine("Key:" + key);
-        await _design.DisplayStandardDesign(key);
-        Debug.WriteLine("Sent Standard Design:" + key);
-        return Ok("Design Sent");
+        Debug.WriteLine($"Key: {key}");
+        await _design.DisplayStandardDesign(key);        
+        return Ok(key);
       }
       catch(Exception err)
       {
