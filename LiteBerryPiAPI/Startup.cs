@@ -16,9 +16,7 @@ using Microsoft.OpenApi.Models;
 namespace Lite_Berry_Pi
 {
   public class Startup
-  {
-    // This method gets called by the runtime. Use this method to add services to the container.
-    // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940  
+  {    
     public IConfiguration Configuration { get; }
 
     public Startup(IConfiguration configuration)
@@ -26,8 +24,6 @@ namespace Lite_Berry_Pi
       Configuration = configuration;
 
     }
-
-
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -89,7 +85,7 @@ namespace Lite_Berry_Pi
           options.SwaggerDoc("v1", new OpenApiInfo()
           {
             Title = "LiteBerry",
-            Version = "v1",
+            Version = "v1.5",
           });
         });
       
