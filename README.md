@@ -3,10 +3,9 @@
 ## Project Lite Berry Pi App
 ---
 ### We are deployed on Azure!
-[Deployed Server](https://liteberrypiserver.azurewebsites.net/)<br>
-[Server GitHub](https://github.com/Lite-Berry-pi/lite-berry-pi-server)<br>
-
-[App / SwaggerUI](https://lite-berry-pi20210208174150.azurewebsites.net/index.html)<br>
+[SignalR Server](https://liteberrypisignalrserver.azurewebsites.net/)<br>
+[GitHub Repository](https://github.com/4a50/Lite-Berry-Pi)<br>
+[Api(SwaggerUI)](https://lite-berry-pi20210208174150.azurewebsites.net/index.html)<br>
 
 ---
 ## Table of Contents
@@ -278,6 +277,48 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
 ---
 
 ## Change Log
+
+### Version 1.5
+
++ *9/8/2021*
+  + Basic front-end created with React
+  + Created a clickable LED light matrix
+  + Conversion from matrix to string  
++ *8/31/2021*
+  + Consolidation of RaspberryPi, API/Database, and SignalR Server projects into single solution
+  + Raspberry Pi
+    + Streamlined display of LEDs
+    + Added CLI Args: 
+      + Bypass SignalR Connection
+      + RaspberryPi initialization
+      + Override URL
+      + Perform display tests
+    + added 'q' to quit program while in loop
+    + added 't' to perform display test while in loop
+    + separated SignalR and RaspberryPi initialization to separate classes
+    + added Design class to create baked in designs/animations
+    + moved createDesign method into Design class
+    + moved display of LED method to Raspi class
+  + API Project
+    + Added Route to trigger baked-in designs on LiteBerry Pi    
+
+### Version 1.0
+
++ *02/11/2021* - 
+  + Assigned roles to users at time of registration.
+  + Added permissions to the route controllers.
+  + Added tests for translating a `string` to light Ids, creating a User and Design, and communicating with the Hub server.
++ *02/10/2021* - 
+  + Made a new route in the design controller which makes a `GET` request to the design table, and sends that data to the server.
+  + Brought in `Unitx` to write tests.
+  + Created a mock database for the tests to run against.
++ *02/09/2021* - 
+  + Database troubleshooting, nuked the whole thing and re-migrated.
+  + Added `Identity` services to the app and assigned role permissions.
+  + Built the client methods that take in the `string` from the server and unpacks it into usable data for the RaspBerryPi.
+  + Added `SignalR` services for web socketing.  
+  + Built and published a `HUB` to act as our server for sending LiteBerries.  
+  + Opened the connection from the server to the RaspBerryPi client.
 + *02/08/2021* - 
   + Wired up the `ASP.NET Core` `MVC` Api App.
   + Built the model classes for the database and set up composite keys.
@@ -288,21 +329,6 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
   + Repository patterns made for all routes and CRUD actions.
   + Created Data Transfer Objects for front facing model views.
   + Published restful API to Azure.
-+ *02/09/2021* - 
-  + Database troubleshooting, nuked the whole thing and re-migrated.
-  + Added `Identity` services to the app and assigned role permissions.
-  + Built the client methods that take in the `string` from the server and unpacks it into usable data for the RaspBerryPi.
-  + Added `SignalR` services for web socketing.  
-  + Built and published a `HUB` to act as our server for sending LiteBerries.  
-  + Opened the connection from the server to the RaspBerryPi client.
-+ *02/10/2021* - 
-  + Made a new route in the design controller which makes a `GET` request to the design table, and sends that data to the server.
-  + Brought in `Unitx` to write tests.
-  + Created a mock database for the tests to run against.
-+ *02/11/2021* - 
-  + Assigned roles to users at time of registration.
-  + Added permissions to the route controllers.
-  + Added tests for translating a `string` to light Ids, creating a User and Design, and communicating with the Hub server.
 
 ---
 
