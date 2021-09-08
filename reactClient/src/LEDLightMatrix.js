@@ -4,16 +4,22 @@ import Card from "react-bootstrap/Card";
 import LEDMatrixDisplay from './components/LEDs/LedMatrixDisplay.js'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-const LEDLightMatrix = () => {
+const LEDLightMatrix = (props) => {
   const [LEDMatrix, setLEDMatrix] = useState(LED.createMatrix());
 
   const handleClick = (e) => {
     (e.color == 'green') ? e.UpdateColor('grey') : e.UpdateColor('green');
     console.log(e);
     setLEDMatrix([...LEDMatrix]);
+  }
+  const convertHandler = () => {
+    props.lightConv(LEDMatrix);
+    console.log(props.lightString);
+
 
   }
   console.log('state: ', LEDMatrix)
+  console.log('props:', props);
   return (
     <>
       <Card className="m-2" style={{ width: '25rem' }} >
@@ -25,7 +31,7 @@ const LEDLightMatrix = () => {
             handleClick={handleClick} /> : <h2>No Matrix</h2>}
           <Container className="center p-2">
             <Button className="m-2">Reset</Button>
-            <Button className="m-2">Convert To Send</Button>
+            <Button onClick={convertHandler} className="m-2">Convert To Send</Button>
           </Container>
 
         </Card.Body>
