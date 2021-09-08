@@ -280,6 +280,10 @@ Microsoft Visual Studio Community 2019 *(Version 16.8.3)*
 
 ### Version 1.5
 
++ *9/8/2021*
+  + Basic front-end created with React
+  + Created a clickable LED light matrix
+  + Conversion from matrix to string  
 + *8/31/2021*
   + Consolidation of RaspberryPi, API/Database, and SignalR Server projects into single solution
   + Raspberry Pi
