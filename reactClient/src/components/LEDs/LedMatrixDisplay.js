@@ -11,19 +11,17 @@ const LEDMatrixDisplay = (props) => {
         props.matrix.map((row, idx) => {
           return <Row
             key={`row-${idx}`}
-            className="p-0 m-0 bg-dark"
+            className="p-0 m-0"
           >
             {row.map((col, idx) => {
               return <Col
                 key={`col-${col.keyId}`}
-                className="p-0 m-0 d-flex bg-dark"
+                className="p-0 m-0 d-flex"
               >
                 <Image
-                  //style={{ width: '2rem' }}
                   key={col.keyId}
                   src={col.src}
                   onClick={() => props.handleClick(col)}
-
                   fluid />
               </Col>
             })}

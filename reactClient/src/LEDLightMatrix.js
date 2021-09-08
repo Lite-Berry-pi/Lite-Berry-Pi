@@ -16,14 +16,14 @@ const LEDLightMatrix = () => {
   console.log('state: ', LEDMatrix)
   return (
     <>
-      <Card className="bg-success" style={{ width: '25rem' }} >
+      <Card className="m-2" style={{ width: '25rem' }} >
         <Card.Header className="bg-grey">
           <Card.Title className="text-center">LiteBerry Pi Viewer</Card.Title>
         </Card.Header>
         <Card.Body >
           {(LEDMatrix.length > 0) ? <LEDMatrixDisplay matrix={LEDMatrix}
             handleClick={handleClick} /> : <h2>No Matrix</h2>}
-          <Container className="center">
+          <Container className="center p-2">
             <Button className="m-2">Reset</Button>
             <Button className="m-2">Convert To Send</Button>
           </Container>
